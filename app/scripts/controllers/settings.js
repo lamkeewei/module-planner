@@ -3,6 +3,8 @@
 angular.module('modulePlannerApp')
   .controller('SettingsCtrl', function ($scope, User, Auth) {
     $scope.errors = {};
+    $scope.firstMajor = ['No Track', 'Quantitative Economics', 'Maritime Economics Concentration'];
+    $scope.secondMajors = ['Finance', 'Marketing', 'Operations'];
 
     $scope.changePassword = function(form) {
       $scope.submitted = true;

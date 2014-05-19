@@ -1,13 +1,13 @@
 <div class="row">
   <div class="col-md-12">
-    <form class="form-horizontal" name="passwordForm" ng-submit="changePassword(passwordForm)">
-      <legend>Password</legend>      
+    <form class="form-horizontal" name="passwordForm" ng-submit="changePassword(passwordForm)" novalidate>
+      <legend>Settings</legend>      
 
       <div class="form-group">
         <label class="control-label col-md-3">Current Password</label>
-        <div class="col-md-9">
-          <input type="password" name="password" class="form-control" ng-model="user.oldPassword" mongoose-error/>
-          <p class="help-block" ng-show="form.password.$error.mongoose">
+        <div class="col-md-3">
+          <input type="password" name="password" class="form-control" ng-model="user.oldPassword" autofocus mongoose-error/>
+          <p class="help-block" ng-show="passwordForm.password.$error.mongoose">
               {{ errors.other }}
           </p>
         </div>
@@ -15,7 +15,7 @@
 
       <div class="form-group">
         <label class="control-label col-md-3">New Password</label>
-        <div class="col-md-9">
+        <div class="col-md-3">
           <input type="password" name="newPassword" class="form-control" ng-model="user.newPassword" ng-minlength="3" required/>
           <p class="help-block"
              ng-show="(form.newPassword.$error.minlength || form.newPassword.$error.required) && (form.newPassword.$dirty || submitted)">
@@ -25,33 +25,33 @@
       </div>
 
       <div class="form-group">
-        <div class="col-md-9 col-md-offset-3">
+        <div class="col-md-3 col-md-offset-3">
           <p class="help-block"> {{ message }} </p>
-          <button class="btn btn-primary" type="submit">Change password</button>
+          <button class="btn btn-success" type="submit">Change password</button>
         </div>
       </div>
     </form>
   </div>
-
+  
   <div class="col-md-12">
-    <form class="form-horizontal">
-        <legend>Profile</legend>
+    <form class="form-horizontal" novalidate>
+        <legend></legend>
         <div class="form-group">
           <label class="control-label col-md-3">First Major</label>
-          <div class="col-md-9">
-            <input type="text" class="form-control" />
+          <div class="col-md-3">
+            <input ng-model="requirement.firstMajor" typeahead="track for track in firstMajor | filter:$viewValue | limitTo:8" type="text" class="form-control" />
           </div>
         </div>
         <div class="form-group">
           <label class="control-label col-md-3">Second Major</label>
-          <div class="col-md-9">
-            <input type="text" class="form-control" />
+          <div class="col-md-3">
+            <input ng-model="requirement.secondMajor" typeahead="major for major in secondMajors | filter:$viewValue | limitTo:8" type="text" class="form-control" />
           </div>
         </div>
 
         <div class="form-group">
           <label class="control-label col-md-3">Exemptions</label>
-          <div class="col-md-4 ">
+          <div class="col-md-6">
             <ul id="exemptions">
               <li>
                 Academic Writing
@@ -62,10 +62,6 @@
               <li>
                 Calculus
               </li>
-            </ul>
-          </div>
-          <div class="col-md-4 clear-left-padding">
-            <ul id="exemptions">
               <li>
                 General Education 1
               </li>
@@ -78,7 +74,7 @@
 
         <div class="form-group">
           <div class="col-md-9 col-md-offset-3">
-            <button class="btn btn-default">Save Changes</button>
+            <button class="btn btn-success">Save Changes</button>
           </div>
         </div>
     </form>
