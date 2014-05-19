@@ -31,3 +31,8 @@ body {
   border: solid #428bca 1px;
   cursor: pointer;
 }
+
+#exemptions li.selected {
+  color: black;
+  border: solid black 1px;
+}
