@@ -33,6 +33,6 @@ body {
 }
 
 #exemptions li.selected {
-  color: black;
-  border: solid black 1px;
+  color: #428bca;
+  border: solid #428bca 1px;
 }

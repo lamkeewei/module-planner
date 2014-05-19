@@ -1,8 +1,11 @@
 <div class="row">
+  <div ng-hide="$rootScope.currentUser.requirement" class="col-md-12 jumbotron initial-login">
+    <h1>Hi there!</h1>
+    <p>This is the first time you are logging in! We need you to fill out some details first before we can get started planning your modules. Remember to change your default password too!</p>
+  </div>
   <div class="col-md-12">
     <form class="form-horizontal" name="passwordForm" ng-submit="changePassword(passwordForm)" novalidate>
-      <legend>Settings</legend>      
-
+      <legend><span ng-show="$rootScope.currentUser.requirement">Settings</span></legend>
       <div class="form-group">
         <label class="control-label col-md-3">Current Password</label>
         <div class="col-md-3">
@@ -27,7 +30,7 @@
       <div class="form-group">
         <div class="col-md-3 col-md-offset-3">
           <p class="help-block"> {{ message }} </p>
-          <button class="btn btn-success" type="submit">Change password</button>
+          <button class="btn btn-primary" type="submit">Change password</button>
         </div>
       </div>
     </form>
@@ -53,7 +56,7 @@
           <label class="control-label col-md-3">Exemptions</label>
           <div class="col-md-6">
             <ul id="exemptions">
-              <li ng-repeat="exemption in exemptions" ng-class="{ 'selected': exemption.selected }" ng-click="setExemptions(exemption)">
+              <li ng-repeat="exemption in exemptions" ng-class="{'selected': exemption.selected }" ng-click="setExemptions(exemption)">
                 {{exemption.title}}
               </li>              
             </ul>
@@ -62,7 +65,7 @@
 
         <div class="form-group">
           <div class="col-md-9 col-md-offset-3">
-            <button class="btn btn-success">Save Changes</button>
+            <button class="btn btn-primary">Save Changes</button>
           </div>
         </div>
     </form>
