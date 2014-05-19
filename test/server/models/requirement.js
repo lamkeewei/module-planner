@@ -62,7 +62,7 @@ describe('Requirement Model', function(){
       dupRequirement.save(function(err){
         should.exist(err);
         done();
-      });      
+      });     
     });
   });
 });

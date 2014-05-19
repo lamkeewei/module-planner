@@ -1,37 +1,86 @@
-<div ng-include="'partials/navbar.html'"></div>
-
 <div class="row">
-  <div class="col-sm-12">
-    <h1>Change Password</h1>
+  <div class="col-md-12">
+    <form class="form-horizontal" name="passwordForm" ng-submit="changePassword(passwordForm)">
+      <legend>Password</legend>      
+
+      <div class="form-group">
+        <label class="control-label col-md-3">Current Password</label>
+        <div class="col-md-9">
+          <input type="password" name="password" class="form-control" ng-model="user.oldPassword" mongoose-error/>
+          <p class="help-block" ng-show="form.password.$error.mongoose">
+              {{ errors.other }}
+          </p>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="control-label col-md-3">New Password</label>
+        <div class="col-md-9">
+          <input type="password" name="newPassword" class="form-control" ng-model="user.newPassword" ng-minlength="3" required/>
+          <p class="help-block"
+             ng-show="(form.newPassword.$error.minlength || form.newPassword.$error.required) && (form.newPassword.$dirty || submitted)">
+            Password must be at least 3 characters.
+          </p>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-md-9 col-md-offset-3">
+          <p class="help-block"> {{ message }} </p>
+          <button class="btn btn-primary" type="submit">Change password</button>
+        </div>
+      </div>
+    </form>
   </div>
-  <div class="col-sm-12">
-    <form class="form" name="form" ng-submit="changePassword(form)" novalidate>
-    	
-      <div class="form-group">
-        <label>Current Password</label>
 
-        <input type="password" name="password" class="form-control" ng-model="user.oldPassword"
-               mongoose-error/>    
-        <p class="help-block" ng-show="form.password.$error.mongoose">
-            {{ errors.other }}
-        </p>
-      </div>
+  <div class="col-md-12">
+    <form class="form-horizontal">
+        <legend>Profile</legend>
+        <div class="form-group">
+          <label class="control-label col-md-3">First Major</label>
+          <div class="col-md-9">
+            <input type="text" class="form-control" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-md-3">Second Major</label>
+          <div class="col-md-9">
+            <input type="text" class="form-control" />
+          </div>
+        </div>
 
-      <div class="form-group">
-        <label>New Password</label>
+        <div class="form-group">
+          <label class="control-label col-md-3">Exemptions</label>
+          <div class="col-md-4 ">
+            <ul id="exemptions">
+              <li>
+                Academic Writing
+              </li>
+              <li>
+                Introduction to Economics
+              </li>
+              <li>
+                Calculus
+              </li>
+            </ul>
+          </div>
+          <div class="col-md-4 clear-left-padding">
+            <ul id="exemptions">
+              <li>
+                General Education 1
+              </li>
+              <li>
+                General Education 2
+              </li>
+            </ul>
+          </div>
+        </div>
 
-        <input type="password" name="newPassword" class="form-control" ng-model="user.newPassword" 
-               ng-minlength="3"
-               required/>
-        <p class="help-block"
-           ng-show="(form.newPassword.$error.minlength || form.newPassword.$error.required) && (form.newPassword.$dirty || submitted)">
-          Password must be at least 3 characters.
-        </p>
-      </div>
-
-      <p class="help-block"> {{ message }} </p>
-
-      <button class="btn btn-lg btn-primary" type="submit">Save changes</button>
+        <div class="form-group">
+          <div class="col-md-9 col-md-offset-3">
+            <button class="btn btn-default">Save Changes</button>
+          </div>
+        </div>
     </form>
   </div>
 </div>

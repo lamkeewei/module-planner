@@ -10,7 +10,8 @@ angular.module('modulePlannerApp', [
     $routeProvider
       .when('/', {
         templateUrl: 'partials/main',
-        controller: 'MainCtrl'
+        controller: 'MainCtrl',
+        authenticate: true
       })
       .when('/login', {
         templateUrl: 'partials/login',
@@ -46,13 +47,18 @@ angular.module('modulePlannerApp', [
       };
     }]);
   })
-  .run(function ($rootScope, $location, Auth) {
+  .run(function ($rootScope, $location, Auth, User) {
 
     // Redirect to login if route requires auth and you're not logged in
     $rootScope.$on('$routeChangeStart', function (event, next) {
-      
       if (next.authenticate && !Auth.isLoggedIn()) {
-        $location.path('/login');
+        return $location.path('/login');
+      }
+
+      var user = User.get();
+
+      if(next.authenticate && !user.requirement) {
+        return $location.path('/settings');
       }
     });
   });
