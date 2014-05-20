@@ -1,19 +1,27 @@
 <div class="row">
   <div class="col-md-12 jumbotron no-background">
-    <h1>Hello, {{currentUser.name }}.</h1>
+    <h1>Hello, {{ currentUser.name }}.</h1>
     <p>Plan your modules below. Click on an empty box to select a possible module.</p>
   </div>
   <div class="col-md-12">
     <div id="planner">
       <div ng-repeat="category in planner" class="category">
         <p class="category-title">
-          {{category[0].type}}
+          {{category.type}}
         </p>
-        <div ng-repeat="course in category" class="course">
-          <small>
-            
-          </small>
-        </div>      
+        <div ng-repeat="course in category.courses" class="wrapper">          
+          <div ng-class="{'selected': course.title, 'exemption': isExemption(course) }" class="course">
+            <small>
+              {{course.title}}
+            </small>
+          </div>
+          <div class="status">
+            <small>
+              <span ng-show="course.title" class="glyphicon glyphicon-ok"></span>
+            </small>
+          </div>
+        </div>
+        <div class="clearfix"></div>
       </div>
       <div class="clearfix"></div>
     </div>    

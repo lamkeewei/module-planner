@@ -76,32 +76,80 @@ div[ng-view].ng-enter {
   .category {
     width: 100%;
   }
+
+  .category .course {
+    width: 90%;
+  }
+
+  .category .status {
+    width: 10%;
+  }
 }
 
 .category .course {
-  border-radius: 5px;
+  float: left;
+  border-radius: 5px 0px 0px 5px;
   padding: 10px;
   background-color: rgb(244,249,255);
   border: solid #ccc 1px;
+  border-right: none;
   height: 50px;
-  width: 100%;
+  width: 75%;
   margin-bottom: 5px;
-  color: #ccc;
 }
 
+.category .status {
+  border-radius: 0px 5px 5px 0px;
+  float: left;
+  height: 50px;
+  width: 25%;
+  border: solid #ccc 1px;
+}
+
+.category .course.selected {
+  background-color: #D1E1E8;
+}
+
+.category .course.exemption {
+  background-color: gainsboro;
+}
+
+.category .course.exemption:hover {
+  background-color: gainsboro;
+  animation: none;
+}
 
 .category .course small {
   position: relative;
   top: 5px;
 }
 
+.category .status small {
+  position: relative;
+  top: 15px;
+}
+
+.category .status:hover {
+  cursor: pointer;
+  background-color: rgb(244,249,255);
+}
+
+.category .status:hover small {
+  -webkit-animation: pulse 0.7s;
+  animation: pulse 0.7s;
+}
+
 .category .course:hover{
-  cursor: pointer;;
+  cursor: pointer;
   background-color: white;
   color: black;
-  -webkit-animation: pulse 0.5s;
-  animation: pulse 0.5s; 
 }
+
+/*.category .wrapper:hover {
+  cursor: pointer;
+  -webkit-animation: pulse 0.5s;
+  animation: pulse 0.5s;
+}*/
 
 .category-title {
   font-size: 15.5px;
