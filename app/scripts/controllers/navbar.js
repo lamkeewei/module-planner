@@ -2,13 +2,7 @@
 
 angular.module('modulePlannerApp')
   .controller('NavbarCtrl', function ($scope, $location, Auth) {
-    $scope.menu = [{
-      'title': 'Home',
-      'link': '/'
-    }, {
-      'title': 'Settings',
-      'link': '/settings'
-    }];
+    $scope.menu = [];
     
     $scope.logout = function() {
       Auth.logout()

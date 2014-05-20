@@ -6,10 +6,13 @@ angular.module('modulePlannerApp')
     $scope.step = 1;
     $scope.errors = {};
     $scope.user = {};
-    $scope.requirement = {};
+    $scope.requirement = {
+      firstMajor: 'No Track',
+      secondMajor: 'Undecided'
+    };
     $scope.requirement.exemptions = [];
 
-    $scope.firstMajor = ['No Track', 'Quantitative Economics', 'Maritime Economics Concentration'];
+    $scope.firstMajors = ['No Track', 'Quantitative Economics', 'Maritime Economics Concentration'];
     $scope.secondMajors = ['Undecided', 'Finance', 'Marketing', 'Operations'];
     $scope.exemptions = Course.findByCategory({ category: 'Exemption' });
 
@@ -26,10 +29,10 @@ angular.module('modulePlannerApp')
     $scope.register = function(form){
       $scope.submitted = true;
       if(form.$valid) {
-        console.log($scope.requirement);
         User.register($scope.requirement, function(){
           $location.path('/');
-        }, function(){
+        }, function(err){
+          $scope.errors.other = err;
         });
       }
     };
@@ -43,6 +46,7 @@ angular.module('modulePlannerApp')
           $scope.message = 'Password successfully changed.';
           $scope.step = 2;
           $scope.submitted = false;
+          $scope.errors = {};
         })
         .catch( function() {
           form.password.$setValidity('mongoose', false);

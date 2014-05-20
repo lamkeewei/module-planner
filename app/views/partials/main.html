@@ -1,19 +1,21 @@
-<div class="jumbotron">
-  <h1>'Allo, 'Allo <span ng-show="currentUser">{{ currentUser.name }}</span>!</h1>
-  <p class="lead">
-    <img src="images/yeoman.png" alt="I'm Yeoman"><br>
-    Always a pleasure scaffolding your apps.
-  </p>
-  <p><a class="btn btn-lg btn-success" ng-href="#">Splendid!</a></p>
-</div>
-
-<div class="row marketing">
-  <div ng-repeat="thing in awesomeThings">
-      <h4>{{thing.name}}</h4>
-      <p>{{thing.info}}</p>
+<div class="row">
+  <div class="col-md-12 jumbotron no-background">
+    <h1>Hello, {{currentUser.name }}.</h1>
+    <p>Plan your modules below. Click on an empty box to select a possible module.</p>
   </div>
-</div>
-
-<div class="footer">
-  <p>♥ from the Yeoman team</p>
+  <div class="col-md-12">
+    <div id="planner">
+      <div ng-repeat="category in planner" class="category">
+        <p class="category-title">
+          {{category[0].type}}
+        </p>
+        <div ng-repeat="course in category" class="course">
+          <small>
+            
+          </small>
+        </div>      
+      </div>
+      <div class="clearfix"></div>
+    </div>    
+  </div>
 </div>

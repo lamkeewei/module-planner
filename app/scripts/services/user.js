@@ -21,6 +21,14 @@ angular.module('modulePlannerApp')
           id: 'me',
           action: 'register'
         }
+      },
+      planner: {
+        method: 'GET',
+        isArray: true,
+        params: {
+          id: 'me',
+          action: 'planner'
+        }
       }
 	  });
   });

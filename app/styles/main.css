@@ -3,6 +3,10 @@
   cursor: pointer; 
 }
 
+.navbar-default {
+  background-color: white;
+}
+
 /* Space out content a bit */
 body {
   padding-top: 20px;
@@ -41,7 +45,7 @@ body {
   margin-top: 50px;
 }
 
-#initial-login.jumbotron {
+.no-background.jumbotron {
   background: none;
   padding-top: 20px;
   padding-bottom: 20px;
@@ -55,4 +59,50 @@ body {
 div[ng-view].ng-enter {
   -webkit-animation: fadeInDown 0.5s;
   animation: fadeInDown 0.5s; 
+}
+
+#planner {
+  /*text-align: center;*/
+}
+
+.category {
+  padding: 10px;
+  width: 25%;
+  float: left;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .category {
+    width: 100%;
+  }
+}
+
+.category .course {
+  border-radius: 5px;
+  padding: 10px;
+  background-color: rgb(244,249,255);
+  border: solid #ccc 1px;
+  height: 50px;
+  width: 100%;
+  margin-bottom: 5px;
+  color: #ccc;
+}
+
+
+.category .course small {
+  position: relative;
+  top: 5px;
+}
+
+.category .course:hover{
+  cursor: pointer;;
+  background-color: white;
+  color: black;
+  -webkit-animation: pulse 0.5s;
+  animation: pulse 0.5s; 
+}
+
+.category-title {
+  font-size: 15.5px;
 }
