@@ -56,8 +56,17 @@ angular.module('modulePlannerApp', [
 
     // Redirect to login if route requires auth and you're not logged in
     $rootScope.$on('$routeChangeStart', function (event, next) {
+      event.preventDefault();
       if (next.authenticate && !Auth.isLoggedIn()) {
         return $location.path('/login');
+      }
+
+      if (next.authenticate) {
+        User.get(function(user){
+          if (!user.requirement) {
+            return $location.path('/welcome');
+          }
+        });
       }
     });
   });
