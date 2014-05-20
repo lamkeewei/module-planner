@@ -2,7 +2,7 @@
 
 angular.module('modulePlannerApp')
   .factory('User', function ($resource) {
-    return $resource('/api/users/:id', {
+    return $resource('/api/users/:id/:action', {
       id: '@id'
     }, { //parameters default
       update: {
@@ -13,6 +13,13 @@ angular.module('modulePlannerApp')
         method: 'GET',
         params: {
           id:'me'
+        }
+      },
+      register: {
+        method: 'POST',
+        params: {
+          id: 'me',
+          action: 'register'
         }
       }
 	  });

@@ -23,9 +23,9 @@ angular.module('modulePlannerApp', [
         templateUrl: 'partials/signup',
         controller: 'SignupCtrl'
       })
-      .when('/settings', {
-        templateUrl: 'partials/settings',
-        controller: 'SettingsCtrl',
+      .when('/welcome', {
+        templateUrl: 'partials/welcome',
+        controller: 'WelcomeCtrl',
         authenticate: true
       })
       .otherwise({
@@ -58,12 +58,6 @@ angular.module('modulePlannerApp', [
     $rootScope.$on('$routeChangeStart', function (event, next) {
       if (next.authenticate && !Auth.isLoggedIn()) {
         return $location.path('/login');
-      }
-
-      var user = User.get();
-
-      if(next.authenticate && !user.requirement) {
-        return $location.path('/settings');
       }
     });
   });

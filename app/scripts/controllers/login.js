@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('modulePlannerApp')
-  .controller('LoginCtrl', function ($scope, Auth, $location) {
+  .controller('LoginCtrl', function ($scope, Auth, $location, $rootScope, User) {
     $scope.user = {};
     $scope.errors = {};
 
@@ -14,8 +14,15 @@ angular.module('modulePlannerApp')
           password: $scope.user.password
         })
         .then( function() {
-          // Logged in, redirect to home
-          $location.path('/');
+          User.get(function(user){
+            if (!user.requirement) {
+              $location.path('/welcome');
+            } else {
+              // Logged in, redirect to home
+              $location.path('/');
+            }
+          });
+
         })
         .catch( function(err) {
           err = err.data;

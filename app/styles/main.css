@@ -33,6 +33,26 @@ body {
 }
 
 #exemptions li.selected {
-  color: #428bca;
-  border: solid #428bca 1px;
+  color: #5cb85c;
+  border: solid #5cb85c 1px;
+}
+
+#main {
+  margin-top: 50px;
+}
+
+#initial-login.jumbotron {
+  background: none;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.animate-switch.ng-enter {
+  -webkit-animation: bounceInRight 1.5s;
+  animation: bounceInRight 1.5s;
+}
+
+div[ng-view].ng-enter {
+  -webkit-animation: fadeInDown 0.5s;
+  animation: fadeInDown 0.5s; 
 }
