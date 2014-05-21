@@ -2,7 +2,7 @@
 
 angular.module('modulePlannerApp')
   .factory('User', function ($resource) {
-    return $resource('/api/users/:id/:action', {
+    return $resource('/api/users/:id/:action/:category', {
       id: '@id'
     }, { //parameters default
       update: {
@@ -28,6 +28,21 @@ angular.module('modulePlannerApp')
         params: {
           id: 'me',
           action: 'planner'
+        }
+      },
+      selectCourse: {
+        method: 'POST',
+        params: {
+          id: 'me',
+          action: 'select'
+        }
+      },
+      getCourses: {
+        method: 'GET',
+        isArray: true,
+        params: {
+          id: 'me',
+          action: 'courses'
         }
       }
 	  });

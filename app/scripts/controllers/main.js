@@ -9,19 +9,21 @@ angular.module('modulePlannerApp')
       return match >= 0;
     };
 
-    $scope.openModal = function(type){
+    $scope.openModal = function(category, index){
       var modalInstace = $modal.open({
         templateUrl: 'partials/modal',
         controller: 'ModalCtrl',
         resolve: {
           courses: function(){
-            return Course.findByCategory({category: type}).$promise;
+            return User.getCourses({category: category.type}).$promise;
           }
         }
       });
 
       modalInstace.result.then(function(selected){
-        console.log(selected);
+        User.selectCourse(selected, function(){
+          category.courses[index] = selected;
+        });
       }, function(reason){
         console.log('Dismissed:', reason);
       });
