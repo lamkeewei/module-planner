@@ -1,0 +1,27 @@
+<div class="course-modal">
+  <div class="modal-body">
+    <h1>Choose your module</h1>
+    <div class="form-group">
+      <div class="input-group">        
+        <input type="text" class="form-control" ng-model="search">
+        <span class="input-group-addon">
+          <span class="glyphicon glyphicon-search"></span>
+        </span>
+      </div>
+    </div>
+    <div class="browse">
+      <div ng-repeat="course in courses|filter: search" class="course" ng-click="select(course)" ng-class="{ 'selected': course.selected }">
+        <p>
+          <span class="course-title">{{course.title}}</span>
+          <br />
+          <small>Prerequisite: {{getPrerequisite(course)}}</small>
+        </p>        
+      </div>      
+      <div class="text-center course" ng-show="courses.length < 1">No match found!</div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-default" ng-click="$dismiss()">Cancel</button>
+    <button class="btn btn-primary" ng-click="done()">Done</button>
+  </div>
+</div>

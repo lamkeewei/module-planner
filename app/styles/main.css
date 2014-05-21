@@ -76,7 +76,7 @@ div[ng-view].ng-enter {
   text-align: center;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 992px) {
   .category {
     width: 100%;
   }
@@ -160,18 +160,27 @@ div[ng-view].ng-enter {
   font-size: 15.5px;
 }
 
+@media(max-width: 1280px){
+  .category-title {
+    font-size: 12.5px;
+  }
+}
+
 .modal-content {
-  margin-top: 50%;
+  margin-top: 20%;
+  width: 450px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .course-modal {
-  height: 300px;
-  padding: 25px;
+  height: auto;
 }
 
 @media (max-width: 768px) {
   .modal-content {
-    margin-top: 150px;
+    margin-top: 30px;
+    width: 100%;
   }
   .course-modal {
     width: 100%;
@@ -185,5 +194,50 @@ div[ng-view].ng-enter {
 }
 
 .modal.fade {
+  -webkit-animation: bounceIn 0.65s;
   animation: bounceIn 0.65s;
 }
+
+.modal-body h1 {
+  padding-bottom: 20px;
+  font-weight: 450;
+  text-align: center;
+}
+
+.browse {
+  height: 200px;
+  border-radius: 5px;
+  width: 100%;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+  border: solid #ccc 1px;
+}
+
+.browse .course {
+  box-sizing: border-box;
+  width: 100%;
+  height: 75px;
+  padding: 15px;
+  border-top: solid #ccc 1px;
+}
+
+.browse .course:hover {
+  cursor: pointer;
+}
+
+.browse .course:first-child {
+  border-top: none;
+}
+
+.browse .course .course-title {
+  font-size: 12pt;
+}
+
+.browse .course small {
+  color: grey;
+}
+
+.browse .course.selected {
+  background-color: aliceblue;  
+}
+
