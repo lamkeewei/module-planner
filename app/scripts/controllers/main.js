@@ -21,7 +21,12 @@ angular.module('modulePlannerApp')
       });
 
       modalInstace.result.then(function(selected){
-        User.selectCourse(selected, function(){
+        var data = {
+          selected: selected,
+          previous: category.courses[index]._id
+        };
+
+        User.selectCourse(data, function(){
           category.courses[index] = selected;
         });
       }, function(reason){
