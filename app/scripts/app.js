@@ -66,6 +66,10 @@ angular.module('modulePlannerApp', [
           if (!user.requirement) {
             return $location.path('/welcome');
           }
+
+          if(next.originalPath === '/welcome'){
+            return $location.path('/');
+          }
         });
       }
     });
