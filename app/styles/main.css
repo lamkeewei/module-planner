@@ -13,6 +13,10 @@ body {
   padding-bottom: 20px;
 }
 
+.well.login {
+  background-color: white; 
+}
+
 #exemptions {
   list-style: none;
   padding-left: 0px;
@@ -116,6 +120,7 @@ div[ng-view].ng-enter {
 
 .category .course.exemption:hover {
   background-color: gainsboro;
+  cursor: not-allowed;
   animation: none;
 }
 
@@ -153,4 +158,32 @@ div[ng-view].ng-enter {
 
 .category-title {
   font-size: 15.5px;
+}
+
+.modal-content {
+  margin-top: 50%;
+}
+
+.course-modal {
+  height: 300px;
+  padding: 25px;
+}
+
+@media (max-width: 768px) {
+  .modal-content {
+    margin-top: 150px;
+  }
+  .course-modal {
+    width: 100%;
+  }
+}
+
+.modal.fade .modal-dialog, .modal.in .modal-dialog {
+  -webkit-transform: translate(0, 0);
+  -ms-transform: translate(0, 0);
+  transform: translate(0, 0);
+}
+
+.modal.fade {
+  animation: bounceIn 0.65s;
 }

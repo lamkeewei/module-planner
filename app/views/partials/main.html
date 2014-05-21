@@ -10,7 +10,7 @@
           {{category.type}}
         </p>
         <div ng-repeat="course in category.courses" class="wrapper">          
-          <div ng-class="{'selected': course.title, 'exemption': isExemption(course) }" class="course">
+          <div ng-class="{'selected': course.title, 'exemption': isExemption(course) }" class="course" ng-click="openModal()">
             <small>
               {{course.title}}
             </small>
