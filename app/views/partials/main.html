@@ -10,14 +10,14 @@
           {{category.type}}
         </p>
         <div ng-repeat="course in category.courses" class="wrapper">          
-          <div ng-class="{'selected': course.title, 'exemption': isExemption(course) }" class="course" ng-click="openModal(category, $index)">
+          <div ng-class="{'selected': course.title, 'exemption': isStatic(course) }" class="course" ng-click="isStatic(course) || chooseCourse(category, $index)">
             <small>
               {{course.title}}
             </small>
           </div>
-          <div class="status">
+          <div class="status" ng-click="!course.title || setTime(course)">
             <small>
-              <span ng-show="course.title" class="glyphicon glyphicon-ok"></span>
+              <span ng-show="course.title" class="glyphicon glyphicon-time"></span>
             </small>
           </div>
         </div>

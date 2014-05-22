@@ -4,23 +4,57 @@ angular.module('modulePlannerApp')
   .controller('MainCtrl', function ($scope, User, _, $modal, Course) {
     $scope.planner = User.planner();
 
-    $scope.isExemption = function(course){
-      var match = _.indexOf(course.category, 'Exemption');
-      return match >= 0;
+    $scope.isStatic = function(course){
+      var exemption = _.indexOf(course.category, 'Exemption');
+      var preassigned = _.indexOf(course.category, 'Preassigned');
+      return exemption >= 0 || preassigned >= 0;
     };
 
-    $scope.openModal = function(category, index){
-      var modalInstace = $modal.open({
+    $scope.setTime = function(course){
+      var modalInstance = $modal.open({
+        templateUrl: 'partials/time',
+        controller: 'TimeCtrl',
+        resolve: {
+          course: function(){
+            return course;
+          }
+        }
+      });
+
+      modalInstance.result.then(function(schedule){
+        User.scheduleCourse(schedule, function(){
+          course.schedule = schedule;
+        });
+      });
+    };
+
+    $scope.chooseCourse = function(category, index){
+      var modalInstance = $modal.open({
         templateUrl: 'partials/modal',
         controller: 'ModalCtrl',
         resolve: {
           courses: function(){
             return User.getCourses({category: category.type}).$promise;
+          },
+          current: function(){
+            return category.courses[index];
           }
         }
       });
 
-      modalInstace.result.then(function(selected){
+      modalInstance.result.then(function(selected){
+        if (!selected){
+          var params = {
+            courseId: category.courses[index]._id
+          };
+
+          User.deselectCourse(params, function(){
+            category.courses[index] = {};
+          });
+
+          return;
+        }
+
         var data = {
           selected: selected,
           previous: category.courses[index]._id
@@ -30,7 +64,7 @@ angular.module('modulePlannerApp')
           category.courses[index] = selected;
         });
       }, function(reason){
-        console.log('Dismissed:', reason);
+        // console.log('Dismissed:', reason);
       });
     };
   });

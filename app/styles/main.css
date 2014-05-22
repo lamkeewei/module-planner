@@ -241,3 +241,11 @@ div[ng-view].ng-enter {
   background-color: aliceblue;  
 }
 
+.btn-delete {
+  border-color: #FF5E3A;
+  color: #FF5E3A;
+}
+
+#time-title {
+  margin-bottom: 30px;
+}

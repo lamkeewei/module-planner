@@ -1,11 +1,13 @@
 'use strict';
 
 angular.module('modulePlannerApp')
-  .controller('ModalCtrl', function ($scope, $modalInstance, courses, _) {
+  .controller('ModalCtrl', function ($scope, $modalInstance, courses, current, _) {
     $scope.courses = _.filter(courses, function(c){
       var match = _.indexOf(c.category, 'Exemption');
       return match === -1;
     });
+
+    $scope.current = current;
 
     $scope.select = function(course){
       $scope.courses.forEach(function(c, i){
