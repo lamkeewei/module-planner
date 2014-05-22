@@ -12,7 +12,8 @@ angular.module('modulePlannerApp')
 
     $scope.isExemption = function(course){
       var exemption = _.indexOf(course.category, 'Exemption');
-      return exemption >= 0;
+      var preassigned = _.indexOf(course.category, 'Preassigned');
+      return exemption >= 0 && preassigned === -1;
     };
 
     $scope.isPreassigned = function(course){

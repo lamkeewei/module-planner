@@ -156,10 +156,10 @@ div[ng-view].ng-enter {
   background-color: rgb(244,249,255);
 }
 
-.category .status:hover small {
+/*.category .status:hover small {
   -webkit-animation: pulse 0.7s;
   animation: pulse 0.7s;
-}
+}*/
 
 .category .course:hover{
   cursor: pointer;

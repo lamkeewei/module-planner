@@ -17,8 +17,8 @@
           </div>
           <div class="status" ng-class="{'exemption': isExemption(course)}" ng-click="isExemption(course) || !course.title || setTime(course)">
             <small>
-              <span ng-show="!isExemption(course) && course.title" class="glyphicon glyphicon-time"></span>
-              <span ng-show="isExemption(course)" class="glyphicon glyphicon-bookmark"></span>
+              <span tooltip="Schedule" ng-show="!isExemption(course) && course.title" class="glyphicon glyphicon-time"></span>
+              <span tooltip="Exempted" ng-show="isExemption(course)" class="glyphicon glyphicon-bookmark"></span>
             </small>
           </div>
         </div>
