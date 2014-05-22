@@ -58,6 +58,13 @@ angular.module('modulePlannerApp')
           id: 'me',
           action: 'schedule'
         }
+      },
+      unscheduleCourse: {
+        method: 'DELETE',
+        params: {
+          id: 'me',
+          action: 'schedule'
+        }
       }
 	  });
   });

@@ -22,6 +22,17 @@ angular.module('modulePlannerApp')
       });
 
       modalInstance.result.then(function(schedule){
+        if (!schedule) {
+          var query = {
+            courseId: course._id
+          };
+
+          User.unscheduleCourse(query, function(){
+            delete course.schedule;
+          });
+
+          return;
+        }
         User.scheduleCourse(schedule, function(){
           course.schedule = schedule;
         });

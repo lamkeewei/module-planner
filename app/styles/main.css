@@ -124,6 +124,14 @@ div[ng-view].ng-enter {
   animation: none;
 }
 
+.category .course.scheduled {
+  background-color: #dff0d8;
+}
+
+.category .course.scheduled:hover {
+  background-color: #C6D7BF;
+}
+
 .category .course small {
   position: relative;
   top: 5px;

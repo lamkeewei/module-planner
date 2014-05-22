@@ -8,7 +8,10 @@ angular.module('modulePlannerApp')
       semester: 1
     };
     
+    $scope.hasSchedule = false;
+
     if (course.schedule) {
       $scope.schedule = course.schedule;
+      $scope.hasSchedule = true;
     }
   });
