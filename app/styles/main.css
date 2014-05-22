@@ -110,6 +110,11 @@ div[ng-view].ng-enter {
   border: solid #ccc 1px;
 }
 
+.category .status.exemption:hover {  
+  cursor: not-allowed;
+  background-color: white;
+}
+
 .category .course.selected {
   background-color: #D1E1E8;
 }
@@ -122,6 +127,10 @@ div[ng-view].ng-enter {
   background-color: gainsboro;
   cursor: not-allowed;
   animation: none;
+}
+
+.category .course.preassigned:hover {
+  background-color: #dff0d8;
 }
 
 .category .course.scheduled {

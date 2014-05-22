@@ -10,6 +10,16 @@ angular.module('modulePlannerApp')
       return exemption >= 0 || preassigned >= 0;
     };
 
+    $scope.isExemption = function(course){
+      var exemption = _.indexOf(course.category, 'Exemption');
+      return exemption >= 0;
+    };
+
+    $scope.isPreassigned = function(course){
+      var preassigned = _.indexOf(course.category, 'Preassigned');
+      return preassigned >= 0;
+    };
+
     $scope.setTime = function(course){
       var modalInstance = $modal.open({
         templateUrl: 'partials/time',

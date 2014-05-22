@@ -10,14 +10,15 @@
           {{category.type}}
         </p>
         <div ng-repeat="course in category.courses" class="wrapper">          
-          <div ng-class="{'selected': course.title, 'exemption': isStatic(course), 'scheduled': course.schedule }" class="course" ng-click="isStatic(course) || chooseCourse(category, $index)">
+          <div ng-class="{'selected': course.title, 'exemption': isPreassigned(course), 'scheduled': course.schedule || isExemption(course) }" class="course" ng-click="isStatic(course) || chooseCourse(category, $index)">
             <small>
               {{course.title}}
             </small>
           </div>
-          <div class="status" ng-click="!course.title || setTime(course)">
+          <div class="status" ng-class="{'exemption': isExemption(course)}" ng-click="isExemption(course) || !course.title || setTime(course)">
             <small>
-              <span ng-show="course.title" class="glyphicon glyphicon-time"></span>
+              <span ng-show="!isExemption(course) && course.title" class="glyphicon glyphicon-time"></span>
+              <span ng-show="isExemption(course)" class="glyphicon glyphicon-bookmark"></span>
             </small>
           </div>
         </div>
