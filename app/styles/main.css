@@ -115,6 +115,10 @@ div[ng-view].ng-enter {
   background-color: white;
 }
 
+.category .status.preassigned:hover {  
+  background-color: rgb(250,250,250);
+}
+
 .category .course.selected {
   background-color: #D1E1E8;
 }

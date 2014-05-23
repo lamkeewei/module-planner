@@ -15,7 +15,7 @@
               {{course.title}}
             </small>
           </div>
-          <div class="status" ng-class="{'exemption': isExemption(course)}" ng-click="isExemption(course) || !course.title || setTime(course)">
+          <div class="status" ng-class="{'exemption': isExemption(course), 'preassigned': isPreassigned(course)}" ng-click="isExemption(course) || !course.title || setTime(course)">
             <small>
               <span tooltip="Schedule" ng-show="!isExemption(course) && course.title" class="glyphicon glyphicon-time"></span>
               <span tooltip="Exempted" ng-show="isExemption(course)" class="glyphicon glyphicon-bookmark"></span>
@@ -23,6 +23,24 @@
           </div>
         </div>
         <div class="clearfix"></div>
+        <div ng-repeat="subtype in category.subtypes">          
+          <p class="category-title">
+            <small><em>{{subtype.type}}</em></small>
+          </p>
+          <div ng-repeat="course in subtype.courses" class="wrapper">          
+            <div ng-class="{'selected': course.title, 'exemption': isPreassigned(course), 'scheduled': course.schedule || isExemption(course) }" class="course" ng-click="isStatic(course) || chooseCourse(subtype, $index)">
+              <small>
+                  {{course.title}}
+              </small>
+            </div>
+            <div class="status" ng-class="{'exemption': isExemption(course)}" ng-click="isExemption(course) || !course.title || setTime(course)">
+              <small>
+                <span tooltip="Schedule" ng-show="!isExemption(course) && course.title" class="glyphicon glyphicon-time"></span>
+                <span tooltip="Exempted" ng-show="isExemption(course)" class="glyphicon glyphicon-bookmark"></span>
+              </small>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="clearfix"></div>
     </div>    
