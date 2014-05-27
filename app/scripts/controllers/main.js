@@ -51,6 +51,7 @@ angular.module('modulePlannerApp')
     };
 
     $scope.chooseCourse = function(category, index){
+      console.log(category.type);
       var modalInstance = $modal.open({
         templateUrl: 'partials/modal',
         controller: 'ModalCtrl',
@@ -71,6 +72,26 @@ angular.module('modulePlannerApp')
           };
 
           User.deselectCourse(params, function(){
+            var prev = category.courses[index];
+            
+            if (prev.doubleCount.length > 0) {
+              angular.forEach($scope.planner, function(category){
+                var categoryType = category.type;
+
+                angular.forEach(prev.doubleCount, function(doubleCount){
+                  // Remove appropriate number of courses
+                  if (doubleCount.replace === categoryType) {
+                    category.courses.push({});
+                  }
+                  // Add appropriate number of courses
+                  if (doubleCount.freeUp === categoryType) {
+                    var courses = category.courses;
+                    courses.splice(courses.length - 1, 1);
+                  }
+                });
+              });
+            }
+
             category.courses[index] = {};
           });
 
@@ -84,6 +105,23 @@ angular.module('modulePlannerApp')
 
         User.selectCourse(data, function(){
           category.courses[index] = selected;
+          if (selected.doubleCount.length > 0) {
+            angular.forEach($scope.planner, function(category){
+              var categoryType = category.type;
+
+              angular.forEach(selected.doubleCount, function(doubleCount){
+                // Remove appropriate number of courses
+                if (doubleCount.replace === categoryType) {
+                  var courses = category.courses;
+                  courses.splice(courses.length - 1, 1);
+                }
+                // Add appropriate number of courses
+                if (doubleCount.freeUp === categoryType) {
+                  category.courses.push({});
+                }
+              });
+            });
+          }
         });
       }, function(reason){
         // console.log('Dismissed:', reason);

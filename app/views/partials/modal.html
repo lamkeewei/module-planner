@@ -12,7 +12,7 @@
     <div class="browse">
       <div ng-repeat="course in courses|filter: search" class="course" ng-click="select(course)" ng-class="{ 'selected': course.selected }">
         <p>
-          <span class="course-title">{{course.title}}</span>
+          <span class="course-title">{{course.title}}</span><span ng-show="course.doubleCount" class="label label-default pull-right">Double Count</span>
           <br />
           <small>Prerequisite: {{getPrerequisite(course)}}</small>
         </p>        
