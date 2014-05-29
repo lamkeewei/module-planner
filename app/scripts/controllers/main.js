@@ -69,7 +69,7 @@ angular.module('modulePlannerApp')
 
     $scope.countEmpty = function(arr){
       var empty = _.filter(arr, function(el){
-        return !el._id;
+        return !$scope.isStatic(el);
       });
 
       return empty.length;
@@ -122,6 +122,11 @@ angular.module('modulePlannerApp')
               if (numDoubleCount === doubleCountedFor){
                 // Add to free up
                 var replace = $scope.flatten[doubleCount.replace];
+                var last = freeUp.courses[freeUp.courses.length - 1];
+                if (last._id) {
+                  User.deselectCourse({ courseId: last._id});
+                }
+                
                 replace.courses.push({});
                 freeUp.courses.splice(freeUp.courses.length - 1, 1);
               }
@@ -148,6 +153,12 @@ angular.module('modulePlannerApp')
             if ($scope.countEmpty(replace.courses) > 0){
               // Add to free up
               var freeUp = $scope.flatten[doubleCount.freeUp];
+              var last = replace.courses[replace.courses.length - 1];
+
+              if (last._id) {
+                User.deselectCourse({ courseId: last._id});
+              }
+
               freeUp.courses.push({});
               replace.courses.splice(replace.courses.length - 1, 1);
             }
