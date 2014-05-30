@@ -12,8 +12,8 @@ angular.module('modulePlannerApp')
     };
     $scope.requirement.exemptions = [];
 
-    $scope.firstMajors = ['No Track', 'Quantitative Economics', 'Maritime Economics Concentration'];
-    $scope.secondMajors = ['Undecided', 'Finance', 'Marketing', 'Operations'];
+    $scope.firstMajors = ['No Track'];
+    $scope.secondMajors = ['Undecided', 'Finance'];
     $scope.exemptions = Course.findByCategory({ category: 'Exemption' });
 
     $scope.setExemptions = function(exemption){

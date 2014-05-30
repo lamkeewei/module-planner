@@ -75,14 +75,14 @@ angular.module('modulePlannerApp')
       return empty.length;
     };
 
-    $scope.getNumDoubleCount = function(category){
+    $scope.getNumDoubleCount = function(replace){
       var allCourses = _.reduce($scope.flatten, function(arr, el, key){
         arr = _.union(arr, el.courses);
         return arr;
       }, []);
 
       var doubleCountable = _.filter(allCourses, function(el){
-        return el.doubleCount && el.doubleCount[0] && el.doubleCount[0].replace === category;
+        return el.doubleCount && el.doubleCount[0] && el.doubleCount[0].replace === replace;
       });
 
       return doubleCountable.length;
@@ -113,15 +113,21 @@ angular.module('modulePlannerApp')
             if (prev.doubleCount.length > 0) {
               var doubleCount = prev.doubleCount[0];
               var freeUp = $scope.flatten[doubleCount.freeUp];
+              var replace = $scope.flatten[doubleCount.replace];
 
               // When the number doubled counted for and of module that is double countable
               // are equal, this means that the max double countable is not exceeded
+
               var numDoubleCount = $scope.getNumDoubleCount(doubleCount.replace);
-              var doubleCountedFor = freeUp.courses.length - freeUp.qtyRequired;
+
+              // This is not aware of other category double count
+              // It should get the number of double count applied for the the replace-freeUp pair
+              
+              var doubleCountedFor = replace.qtyRequired - replace.courses.length;
+              console.log(numDoubleCount, doubleCountedFor);
 
               if (numDoubleCount === doubleCountedFor){
                 // Add to free up
-                var replace = $scope.flatten[doubleCount.replace];
                 var last = freeUp.courses[freeUp.courses.length - 1];
                 if (last._id) {
                   User.deselectCourse({ courseId: last._id});

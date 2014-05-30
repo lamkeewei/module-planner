@@ -6,7 +6,7 @@
   <div class="col-md-12">
     <div id="planner">
       <div ng-repeat="category in planner" class="category">
-        <p class="category-title">
+        <p ng-show="category.courses.length > 0" class="category-title">
           {{category.type}}
         </p>
         <div ng-repeat="course in category.courses" class="wrapper">          
@@ -24,8 +24,8 @@
         </div>
         <div class="clearfix"></div>
         <div ng-repeat="subtype in category.subtypes">          
-          <p class="category-title">
-            <small><em>{{subtype.type}}</em></small>
+          <p class="category-title" ng-show="subtype.courses.length > 0">
+            {{subtype.type}}
           </p>
           <div ng-repeat="course in subtype.courses" class="wrapper">          
             <div ng-class="{'selected': course.title, 'exemption': isPreassigned(course), 'scheduled': course.schedule || isExemption(course) }" class="course" ng-click="isStatic(course) || chooseCourse(subtype, $index)">
