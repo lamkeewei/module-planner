@@ -214,9 +214,11 @@ div[ng-view].ng-enter {
   transform: translate(0, 0);
 }
 
+
+/*Toggle for bounce animation*/
 .modal.fade {
-  -webkit-animation: bounceIn 0.65s;
-  animation: bounceIn 0.65s;
+  /*-webkit-animation: bounceIn 0.65s;
+  animation: bounceIn 0.65s;*/
 }
 
 .modal-body h1 {

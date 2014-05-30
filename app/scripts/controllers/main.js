@@ -139,7 +139,9 @@ angular.module('modulePlannerApp')
         }
 
         var data = {
+          category: category.type,
           selected: selected,
+          // Previous will be set if it's a replacement
           previous: category.courses[index]._id
         };
 
