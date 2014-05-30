@@ -12,9 +12,9 @@
     <div class="browse">
       <div ng-repeat="course in courses|filter: search" class="course" ng-click="select(course)" ng-class="{ 'selected': course.selected }">
         <p>
-          <span class="course-title">{{course.title}}</span><span ng-show="course.doubleCount" class="label label-default pull-right">Double Count</span>
+          <span class="course-title">{{course.code}} - {{course.title}}</span><span ng-show="course.doubleCount" class="label label-default pull-right">DC</span>
           <br />
-          <small>Prerequisite: {{getPrerequisite(course)}}</small>
+          <small>Prerequisite: {{getDoubleCount(course)}}</small>
         </p>        
       </div>      
       <div class="text-center course" ng-show="courses.length < 1">No match found!</div>

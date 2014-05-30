@@ -88,6 +88,35 @@ angular.module('modulePlannerApp')
       return doubleCountable.length;
     };
 
+    $scope.deselect = function(prev){
+      if (prev.doubleCount.length > 0) {
+        var doubleCount = prev.doubleCount[0];
+        var freeUp = $scope.flatten[doubleCount.freeUp];
+        var replace = $scope.flatten[doubleCount.replace];
+
+        // When the number doubled counted for and of module that is double countable
+        // are equal, this means that the max double countable is not exceeded
+
+        var numDoubleCount = $scope.getNumDoubleCount(doubleCount.replace);
+
+        // This is not aware of other category double count
+        // It should get the number of double count applied for the the replace-freeUp pair
+        
+        var doubleCountedFor = replace.qtyRequired - replace.courses.length;
+
+        if (numDoubleCount === doubleCountedFor){
+          // Add to free up
+          var last = freeUp.courses[freeUp.courses.length - 1];
+          if (last._id) {
+            User.deselectCourse({ courseId: last._id});
+          }
+          
+          replace.courses.push({});
+          freeUp.courses.splice(freeUp.courses.length - 1, 1);
+        }
+      }
+    };
+
     $scope.chooseCourse = function(category, index){
       var modalInstance = $modal.open({
         templateUrl: 'partials/modal',
@@ -110,34 +139,7 @@ angular.module('modulePlannerApp')
 
           User.deselectCourse(params, function(){
             var prev = category.courses[index];
-            if (prev.doubleCount.length > 0) {
-              var doubleCount = prev.doubleCount[0];
-              var freeUp = $scope.flatten[doubleCount.freeUp];
-              var replace = $scope.flatten[doubleCount.replace];
-
-              // When the number doubled counted for and of module that is double countable
-              // are equal, this means that the max double countable is not exceeded
-
-              var numDoubleCount = $scope.getNumDoubleCount(doubleCount.replace);
-
-              // This is not aware of other category double count
-              // It should get the number of double count applied for the the replace-freeUp pair
-              
-              var doubleCountedFor = replace.qtyRequired - replace.courses.length;
-              console.log(numDoubleCount, doubleCountedFor);
-
-              if (numDoubleCount === doubleCountedFor){
-                // Add to free up
-                var last = freeUp.courses[freeUp.courses.length - 1];
-                if (last._id) {
-                  User.deselectCourse({ courseId: last._id});
-                }
-                
-                replace.courses.push({});
-                freeUp.courses.splice(freeUp.courses.length - 1, 1);
-              }
-            }
-
+            $scope.deselect(prev);
             category.courses[index] = {};
           });
 
@@ -151,9 +153,13 @@ angular.module('modulePlannerApp')
           previous: category.courses[index]._id
         };
 
-        User.selectCourse(data, function(data){
-          category.courses[index] = selected;
 
+        User.selectCourse(data, function(){
+          if (data.previous) {
+            $scope.deselect(category.courses[index]);
+          }
+
+          category.courses[index] = selected;
           if (selected.doubleCount.length > 0) {
             var doubleCount = selected.doubleCount[0];
             var replace = $scope.flatten[doubleCount.replace];
@@ -162,7 +168,6 @@ angular.module('modulePlannerApp')
               // Add to free up
               var freeUp = $scope.flatten[doubleCount.freeUp];
               var last = replace.courses[replace.courses.length - 1];
-
               if (last._id) {
                 User.deselectCourse({ courseId: last._id});
               }

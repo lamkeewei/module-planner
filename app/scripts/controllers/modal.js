@@ -23,6 +23,14 @@ angular.module('modulePlannerApp')
       return course.prerequisite.join();
     };
 
+    $scope.getDoubleCount = function(course){
+      if (course.doubleCount.length > 0) {
+        return course.doubleCount[0].replace;
+      }
+
+      return 'None';
+    };
+
     $scope.done = function(){
       var selected;
 

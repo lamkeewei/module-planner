@@ -92,14 +92,20 @@ div[ng-view].ng-enter {
 
 .category .course {
   float: left;
+  display: table;
   border-radius: 5px 0px 0px 5px;
-  padding: 10px;
+  padding: 0px 10px;
   background-color: rgb(244,249,255);
   border: solid #ccc 1px;
   border-right: none;
   height: 50px;
   width: 75%;
   margin-bottom: 5px;
+}
+
+.category .course small {
+  display: table-cell;
+  vertical-align: middle;
 }
 
 .category .status {
@@ -143,11 +149,6 @@ div[ng-view].ng-enter {
 
 .category .course.scheduled:hover {
   background-color: #C6D7BF;
-}
-
-.category .course small {
-  position: relative;
-  top: 5px;
 }
 
 .category .status small {
@@ -253,7 +254,7 @@ div[ng-view].ng-enter {
 }
 
 .browse .course .course-title {
-  font-size: 12pt;
+  font-size: 11pt;
 }
 
 .browse .course small {
