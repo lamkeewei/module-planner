@@ -22,10 +22,36 @@ angular.module('modulePlannerApp')
       }, {});
     });
 
-    $scope.optionsToggle = function(){
-      $scope.showOptions = !$scope.showOptions;
+    // Filter options
+    $scope.yearFilter = ['Year 1', 'Year 2', 'Year 3', 'Year 4'];
+    $scope.semesterFilter = ['Semester 1', 'Semester 2'];
+    $scope.activeFilter = [];
+    $scope.status = {
+      isOpen: false
     };
 
+    $scope.selectFilter = function(filter){
+      $scope.status.isOpen = false;
+
+      if (_.indexOf($scope.activeFilter, filter) !== -1){
+        return;
+      }
+      $scope.activeFilter.push(filter);
+    };
+
+    $scope.deselectFilter = function(filter){
+      $scope.activeFilter = _.filter($scope.activeFilter, function(f){
+        return f !== filter;
+      });
+      $scope.status.isOpen = false;
+    };
+
+    $scope.clearAllFilters = function(){
+      $scope.activeFilter = [];
+      $scope.status.isOpen = false;
+    };
+
+    // Display
     $scope.isStatic = function(course){
       var exemption = _.indexOf(course.category, 'Exemption');
       var preassigned = _.indexOf(course.category, 'Preassigned');

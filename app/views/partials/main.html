@@ -5,20 +5,24 @@
   </div>
   
   <div class="col-md-12" id="filter">
-    <div class="btn-group pull-right" dropdown>
+    <div class="btn-group pull-left" dropdown is-open="status.isOpen">
       <button type="button" class="btn btn-default btn-sm dropdown-toggle">
         Filter  <span class="caret"></span>
       </button>
       <ul class="dropdown-menu" role="menu">
-        <li><a href="#">Year 1</a></li>
-        <li><a href="#">Year 2</a></li>
-        <li><a href="#">Year 3</a></li>
-        <li><a href="#">Year 4</a></li>
+        <li><a href="" ng-repeat="year in yearFilter" ng-click="selectFilter(year)">{{year}}</a></li>
         <li class="divider"></li>
-        <li><a href="#">Semester 1</a></li>
-        <li><a href="#">Semester 2</a></li>
+        <li><a href="" ng-repeat="semester in semesterFilter" ng-click="selectFilter(semester)">{{semester}}</a></li>
+        <li class="divider"></li>
+        <li><a href="" ng-click="clearAllFilters()">Clear all</a></li>
       </ul>
     </div>
+    <p class="pull-left" id="active-filters">
+      <button ng-show="activeFilter.length < 1" class="btn btn-link btn-sm filter" ng-disabled="true">No filter selected</button>
+      <button ng-click="deselectFilter(filter)" class="btn btn-link btn-sm filter" ng-repeat="filter in activeFilter">
+        {{filter}}  <span class="glyphicon glyphicon-remove"></span>
+      </button>
+    </p>
     <div class="clearfix"></div>
     <legend></legend>
 
