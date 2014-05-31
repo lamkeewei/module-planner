@@ -2,6 +2,7 @@
 
 angular.module('modulePlannerApp')
   .controller('MainCtrl', function ($scope, User, _, $modal, Course) {
+    $scope.showOptions = false;
     $scope.planner = User.planner(function(){
       $scope.flatten = _.reduce($scope.planner, function(flat, el){
         flat[el.type] = {
@@ -20,6 +21,10 @@ angular.module('modulePlannerApp')
         return flat;
       }, {});
     });
+
+    $scope.optionsToggle = function(){
+      $scope.showOptions = !$scope.showOptions;
+    };
 
     $scope.isStatic = function(course){
       var exemption = _.indexOf(course.category, 'Exemption');

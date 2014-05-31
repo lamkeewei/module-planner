@@ -1,7 +1,27 @@
 <div class="row">
-  <div class="col-md-12 jumbotron no-background">
+  <div class="col-md-12 jumbotron main">
     <h1>Hello, {{ currentUser.name }}.</h1>
     <p>Plan your modules below. Click on an empty box to select a possible module.</p>
+  </div>
+  
+  <div class="col-md-12" id="filter">
+    <div class="btn-group pull-right" dropdown>
+      <button type="button" class="btn btn-default btn-sm dropdown-toggle">
+        Filter  <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" role="menu">
+        <li><a href="#">Year 1</a></li>
+        <li><a href="#">Year 2</a></li>
+        <li><a href="#">Year 3</a></li>
+        <li><a href="#">Year 4</a></li>
+        <li class="divider"></li>
+        <li><a href="#">Semester 1</a></li>
+        <li><a href="#">Semester 2</a></li>
+      </ul>
+    </div>
+    <div class="clearfix"></div>
+    <legend></legend>
+
   </div>
   <div class="col-md-12">
     <div id="planner">
