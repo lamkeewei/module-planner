@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('modulePlannerApp')
-  .controller('MainCtrl', function ($scope, User, _, $modal, Course) {
+  .controller('MainCtrl', function ($scope, User, _, $modal, Course, courseFilterFilter) {
     $scope.showOptions = false;
     $scope.planner = User.planner(function(){
       $scope.flatten = _.reduce($scope.planner, function(flat, el){
@@ -98,6 +98,21 @@ angular.module('modulePlannerApp')
       });
     };
 
+    $scope.hasCourses = function(category){
+      if (category.subtypes.length > 0) {
+        var subCount = 0;
+        category.subtypes.forEach(function(el){
+          var sub = courseFilterFilter(el.courses, $scope.activeFilters);
+          if (sub.length > 0) { subCount++; }
+        });
+
+        if (subCount > 0) { return true; }
+      }
+
+      var courses = courseFilterFilter(category.courses, $scope.activeFilters);
+      return courses.length > 0;
+    };
+
     $scope.countEmpty = function(arr){
       var empty = _.filter(arr, function(el){
         return !$scope.isStatic(el);
@@ -120,7 +135,6 @@ angular.module('modulePlannerApp')
     };
 
     $scope.sortPlanner = function(){
-      console.log('sort');
       $scope.planner = _.sortBy($scope.planner, function(el){
         return el.courses.length;
       });

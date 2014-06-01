@@ -13,7 +13,7 @@ angular.module('modulePlannerApp')
     $scope.requirement.exemptions = [];
 
     $scope.firstMajors = ['No Track'];
-    $scope.secondMajors = ['Finance'];
+    $scope.secondMajors = ['Undecided', 'Finance'];
     $scope.exemptions = Course.findByCategory({ category: 'Exemption' });
 
     $scope.setExemptions = function(exemption){

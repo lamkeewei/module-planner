@@ -29,7 +29,7 @@
   </div>
   <div class="col-md-12">
     <div id="planner">
-      <div ng-repeat="category in planner" ng-show="(category.courses | courseFilter: activeFilters).length > 0 || (subtype.courses | courseFilter: activeFilters).length > 0" class="category">
+      <div ng-repeat="category in planner" ng-show="hasCourses(category)" class="category">
         <div ng-show="(category.courses | courseFilter: activeFilters).length > 0">
           <p ng-show="category.courses.length > 0" class="category-title">
             {{category.type}}
@@ -70,11 +70,7 @@
             <div class="clearfix"></div>
           </div>
         </div>
-      </div>
-
-      <div ng-hide="(category.courses | courseFilter: activeFilters).length > 0 || (subtype.courses | courseFilter: activeFilters).length > 0" class="text-center">
-        No match found.
-      </div>
+      </div>      
     </div>    
   </div>
 </div>
