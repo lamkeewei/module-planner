@@ -18,8 +18,8 @@
       </ul>
     </div>
     <p class="pull-left" id="active-filters">
-      <button ng-show="activeFilter.length < 1" class="btn btn-link btn-sm filter" ng-disabled="true">No filter selected</button>
-      <button ng-click="deselectFilter(filter)" class="btn btn-link btn-sm filter" ng-repeat="filter in activeFilter">
+      <button ng-show="activeFilters.length < 1" class="btn btn-link btn-sm filter" ng-disabled="true">No filter selected</button>
+      <button ng-click="deselectFilter(filter)" class="btn btn-link btn-sm filter" ng-repeat="filter in activeFilters">
         {{filter}}  <span class="glyphicon glyphicon-remove"></span>
       </button>
     </p>
@@ -29,44 +29,52 @@
   </div>
   <div class="col-md-12">
     <div id="planner">
-      <div ng-repeat="category in planner" class="category">
-        <p ng-show="category.courses.length > 0" class="category-title">
-          {{category.type}}
-        </p>
-        <div ng-repeat="course in category.courses" class="wrapper">          
-          <div ng-class="{'selected': course.title, 'exemption': isPreassigned(course), 'scheduled': course.schedule || isExemption(course) }" class="course" ng-click="isStatic(course) || chooseCourse(category, $index)">
-            <small>
-              {{course.title}}
-            </small>
-          </div>
-          <div class="status" ng-class="{'exemption': isExemption(course), 'preassigned': isPreassigned(course)}" ng-click="isExemption(course) || !course.title || setTime(course)">
-            <small>
-              <span tooltip="Schedule" ng-show="!isExemption(course) && course.title" class="glyphicon glyphicon-time"></span>
-              <span tooltip="Exempted" ng-show="isExemption(course)" class="glyphicon glyphicon-bookmark"></span>
-            </small>
-          </div>
-        </div>
-        <div class="clearfix"></div>
-        <div ng-repeat="subtype in category.subtypes">          
-          <p class="category-title" ng-show="subtype.courses.length > 0">
-            {{subtype.type}}
-          </p>
-          <div ng-repeat="course in subtype.courses" class="wrapper">          
-            <div ng-class="{'selected': course.title, 'exemption': isPreassigned(course), 'scheduled': course.schedule || isExemption(course) }" class="course" ng-click="isStatic(course) || chooseCourse(subtype, $index)">
+      <div ng-repeat="category in planner" ng-show="(category.courses | courseFilter: activeFilters).length > 0 || (subtype.courses | courseFilter: activeFilters).length > 0" class="category">
+        <div ng-show="(category.courses | courseFilter: activeFilters).length > 0">
+          <p ng-show="category.courses.length > 0" class="category-title">
+            {{category.type}}
+          </p>          
+          <div ng-repeat="course in category.courses | courseFilter: activeFilters" class="wrapper">          
+            <div ng-class="{'selected': course.title, 'exemption': isPreassigned(course), 'scheduled': course.schedule || isExemption(course) }" class="course" ng-click="isStatic(course) || chooseCourse(category, $index)">
               <small>
-                  {{course.title}}
+                {{course.title}}
               </small>
             </div>
-            <div class="status" ng-class="{'exemption': isExemption(course)}" ng-click="isExemption(course) || !course.title || setTime(course)">
+            <div class="status" ng-class="{'exemption': isExemption(course), 'preassigned': isPreassigned(course)}" ng-click="isExemption(course) || !course.title || setTime(course)">
               <small>
                 <span tooltip="Schedule" ng-show="!isExemption(course) && course.title" class="glyphicon glyphicon-time"></span>
                 <span tooltip="Exempted" ng-show="isExemption(course)" class="glyphicon glyphicon-bookmark"></span>
               </small>
             </div>
           </div>
+          <div class="clearfix"></div>
+        </div>        
+        <div ng-repeat="subtype in category.subtypes">
+          <div ng-show="(subtype.courses | courseFilter: activeFilters).length > 0">
+            <p class="category-title" ng-show="subtype.courses.length > 0">
+              {{subtype.type}}
+            </p>
+            <div ng-repeat="course in subtype.courses | courseFilter: activeFilters" class="wrapper">          
+              <div ng-class="{'selected': course.title, 'exemption': isPreassigned(course), 'scheduled': course.schedule || isExemption(course) }" class="course" ng-click="isStatic(course) || chooseCourse(subtype, $index)">
+                <small>
+                    {{course.title}}
+                </small>
+              </div>
+              <div class="status" ng-class="{'exemption': isExemption(course)}" ng-click="isExemption(course) || !course.title || setTime(course)">
+                <small>
+                  <span tooltip="Schedule" ng-show="!isExemption(course) && course.title" class="glyphicon glyphicon-time"></span>
+                  <span tooltip="Exempted" ng-show="isExemption(course)" class="glyphicon glyphicon-bookmark"></span>
+                </small>
+              </div>
+            </div>
+            <div class="clearfix"></div>
+          </div>
         </div>
       </div>
-      <div class="clearfix"></div>
+
+      <div ng-hide="(category.courses | courseFilter: activeFilters).length > 0 || (subtype.courses | courseFilter: activeFilters).length > 0" class="text-center">
+        No match found.
+      </div>
     </div>    
   </div>
 </div>

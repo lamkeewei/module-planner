@@ -25,7 +25,7 @@ angular.module('modulePlannerApp')
     // Filter options
     $scope.yearFilter = ['Year 1', 'Year 2', 'Year 3', 'Year 4'];
     $scope.semesterFilter = ['Semester 1', 'Semester 2'];
-    $scope.activeFilter = [];
+    $scope.activeFilters = [];
     $scope.status = {
       isOpen: false
     };
@@ -33,21 +33,21 @@ angular.module('modulePlannerApp')
     $scope.selectFilter = function(filter){
       $scope.status.isOpen = false;
 
-      if (_.indexOf($scope.activeFilter, filter) !== -1){
+      if (_.indexOf($scope.activeFilters, filter) !== -1){
         return;
       }
-      $scope.activeFilter.push(filter);
+      $scope.activeFilters.push(filter);
     };
 
     $scope.deselectFilter = function(filter){
-      $scope.activeFilter = _.filter($scope.activeFilter, function(f){
+      $scope.activeFilters = _.filter($scope.activeFilters, function(f){
         return f !== filter;
       });
       $scope.status.isOpen = false;
     };
 
     $scope.clearAllFilters = function(){
-      $scope.activeFilter = [];
+      $scope.activeFilters = [];
       $scope.status.isOpen = false;
     };
 
@@ -119,6 +119,13 @@ angular.module('modulePlannerApp')
       return doubleCountable.length;
     };
 
+    $scope.sortPlanner = function(){
+      console.log('sort');
+      $scope.planner = _.sortBy($scope.planner, function(el){
+        return el.courses.length;
+      });
+    };
+
     $scope.deselect = function(prev){
       if (prev.doubleCount.length > 0) {
         var doubleCount = prev.doubleCount[0];
@@ -174,6 +181,8 @@ angular.module('modulePlannerApp')
             category.courses[index] = {};
           });
 
+          // Resort planner
+          $scope.sortPlanner();
           return;
         }
 
@@ -207,6 +216,9 @@ angular.module('modulePlannerApp')
               replace.courses.splice(replace.courses.length - 1, 1);
             }
           }
+
+          // Resort planner
+          $scope.sortPlanner();
         });
       }, function(reason){
         // console.log('Dismissed:', reason);

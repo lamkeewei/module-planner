@@ -57,6 +57,10 @@ body {
   color: black;
 }
 
+#active-filters .filter:focus {
+  outline: none;
+}
+
 #active-filters .filter:hover {
   color: black;
   text-decoration: none; 
