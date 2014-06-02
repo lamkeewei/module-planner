@@ -20,8 +20,6 @@ angular.module('modulePlannerApp')
           semesters.push(Number(words[1]));
         }
       });
-
-      console.log(courses);
       
       if (years.length > 0) {
         courses = _.filter(courses, function(course){

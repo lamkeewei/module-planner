@@ -7,6 +7,10 @@
   background-color: white;
 }
 
+.list-group-item:hover {
+  cursor: pointer;
+}
+
 /* Space out content a bit */
 body {
   padding-top: 20px;

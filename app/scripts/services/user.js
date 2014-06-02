@@ -65,6 +65,13 @@ angular.module('modulePlannerApp')
           id: 'me',
           action: 'schedule'
         }
+      },
+      getProfile: {
+        method: 'GET',
+        params: {
+          id: 'me',
+          action: 'profile'
+        }
       }
 	  });
   });

@@ -28,6 +28,11 @@ angular.module('modulePlannerApp', [
         controller: 'WelcomeCtrl',
         authenticate: true
       })
+      .when('/settings', {
+        templateUrl: 'partials/settings',
+        controller: 'SettingsCtrl',
+        authenticate: true
+      })
       .otherwise({
         redirectTo: '/'
       });

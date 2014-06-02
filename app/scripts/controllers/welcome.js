@@ -16,9 +16,9 @@ angular.module('modulePlannerApp')
     $scope.secondMajors = ['Undecided', 'Finance'];
     $scope.exemptions = Course.findByCategory({ category: 'Exemption' });
 
-    $scope.setExemptions = function(exemption){
+    $scope.setExemptions = function(exemption, exemptions){
       exemption.selected = !exemption.selected;
-      var filtered = _.filter($scope.exemptions, function(ex){
+      var filtered = _.filter(exemptions, function(ex){
         return ex.selected;
       });
       $scope.requirement.exemptions = _.map(filtered, function(ex){
@@ -26,10 +26,10 @@ angular.module('modulePlannerApp')
       });
     };
 
-    $scope.register = function(form){
+    $scope.register = function(form, requirement){
       $scope.submitted = true;
       if(form.$valid) {
-        User.register($scope.requirement, function(){
+        User.register(requirement, function(){
           $location.path('/');
         }, function(err){
           $scope.errors.other = err;
@@ -47,6 +47,8 @@ angular.module('modulePlannerApp')
           $scope.step = 2;
           $scope.submitted = false;
           $scope.errors = {};
+          $scope.user.oldPassword = '';
+          $scope.user.newPassword = '';
         })
         .catch( function() {
           form.password.$setValidity('mongoose', false);

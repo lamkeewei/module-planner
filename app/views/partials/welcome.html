@@ -42,7 +42,7 @@
         </div>
     </form>
 
-    <form ng-switch-when="2" ng-submit="register(registerForm)" name="registerForm" class="form-horizontal animate-switch" novalidate>
+    <form ng-switch-when="2" ng-submit="register(registerForm, requirement)" name="registerForm" class="form-horizontal animate-switch" novalidate>
         <legend></legend>
         <div class="form-group has-error" ng-show="errors.other">
           <div class="col-md-6 col-md-offset-3">
@@ -87,7 +87,7 @@
           <label class="control-label col-md-3">Exemptions</label>
           <div class="col-md-6">
             <ul id="exemptions">
-              <li ng-repeat="exemption in exemptions" ng-class="{'selected': exemption.selected }" ng-click="setExemptions(exemption)">
+              <li ng-repeat="exemption in exemptions" ng-class="{'selected': exemption.selected }" ng-click="setExemptions(exemption, exemptions)">
                 {{exemption.title}}
               </li>              
             </ul>
