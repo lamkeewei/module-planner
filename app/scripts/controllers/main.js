@@ -92,6 +92,9 @@ angular.module('modulePlannerApp')
 
           return;
         }
+
+        schedule.semester = Number(schedule.semester);
+        schedule.year = Number(schedule.year);
         User.scheduleCourse(schedule, function(){
           course.schedule = schedule;
         });
