@@ -68,7 +68,7 @@ angular.module('modulePlannerApp', [
 
       if (next.authenticate) {
         User.get(function(user){
-          if (!user.requirement) {
+          if (user.requirement.length < 1) {
             return $location.path('/welcome');
           }
 

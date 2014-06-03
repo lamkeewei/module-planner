@@ -25,7 +25,6 @@ angular.module('modulePlannerApp')
       });
     });
 
-
     $scope.changeView = function(index){
       $scope.activeView = index;
     };

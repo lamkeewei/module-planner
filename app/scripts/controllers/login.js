@@ -15,7 +15,7 @@ angular.module('modulePlannerApp')
         })
         .then( function() {
           User.get(function(user){
-            if (!user.requirement) {
+            if (user.requirement.length < 1) {
               $location.path('/welcome');
             } else {
               // Logged in, redirect to home
