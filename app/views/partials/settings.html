@@ -60,7 +60,7 @@
         <h3 class="panel-title">Majors Options</h3>
       </div>
       <div class="panel-body">
-        <form ng-submit="register(registerForm)" name="registerForm" class="form-horizontal" novalidate>
+        <form ng-submit="updateProfile(registerForm)" name="registerForm" class="form-horizontal" novalidate>
           <div class="form-group has-error" ng-show="errors.other">
             <div class="col-md-6 col-md-offset-3">
               <p class="help-block">
@@ -113,6 +113,7 @@
 
           <div class="form-group">
             <div class="col-md-9 col-md-offset-3">
+              <p class="help-block" ng-show="message"> {{ message }} </p>
               <button type="submit" class="btn btn-primary">Save Changes</button>
             </div>
           </div>

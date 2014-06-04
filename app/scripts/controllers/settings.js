@@ -25,6 +25,21 @@ angular.module('modulePlannerApp')
       });
     });
 
+    $scope.updateProfile = function(form){
+      var exemptions = _.reduce($scope.availableExemptions, function(arr, el){
+        if (el.selected) {
+          arr.push(el._id);
+        }
+        return arr;
+      }, []);
+      var data = {
+        exemptions: exemptions
+      };
+      User.updateProfile(data, function(){
+        $scope.message = 'Updated';
+      });
+    };
+
     $scope.changeView = function(index){
       $scope.activeView = index;
     };

@@ -72,6 +72,13 @@ angular.module('modulePlannerApp')
           id: 'me',
           action: 'profile'
         }
+      },
+      updateProfile: {
+        method: 'PUT',
+        params: {
+          id: 'me',
+          action: 'profile'
+        }
       }
 	  });
   });
