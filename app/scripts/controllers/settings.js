@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('modulePlannerApp')
-  .controller('SettingsCtrl', function ($scope, $http, User, Course, _) {
-    $scope.options = ['Password', 'Majors Options'];
+  .controller('SettingsCtrl', function ($scope, $http, User, Course, _, $location) {
+    $scope.options = ['Majors Options', 'Password'];
     $scope.activeView = 0;
     $scope.userRequirement = {
       firstMajor: 'No Track',
@@ -36,7 +36,9 @@ angular.module('modulePlannerApp')
         exemptions: exemptions
       };
       User.updateProfile(data, function(){
-        $scope.message = 'Updated';
+        $location.path('/');
+      }, function(){
+        $scope.message = 'An error has occurred';
       });
     };
 

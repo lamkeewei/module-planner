@@ -8,8 +8,62 @@
   </div>
 
   <div ng-controller="WelcomeCtrl" class="col-md-9" ng-switch on="activeView">
-    <!-- Password settings -->
+    <!-- Major options settings -->
     <div ng-switch-when="0" class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Majors Options</h3>
+      </div>
+      <div class="panel-body">
+        <form ng-submit="updateProfile(registerForm)" name="registerForm" class="form-horizontal" novalidate>
+          <div class="form-group has-error" ng-show="errors.other">
+            <div class="col-md-6 col-md-offset-3">
+              <p class="help-block">
+                No matching combination found
+              </p>            
+            </div>
+          </div>
+
+          <div class="form-group" ng-class="{'has-error': submitted && registerForm.firstMajor.$invalid }">
+            <label class="control-label col-md-3">First Major</label>
+            <div class="col-md-3">
+              <!-- <input ng-model="requirement.firstMajor" name="firstMajor" typeahead="track for track in firstMajor | filter:$viewValue | limitTo:8" type="text" class="form-control" autofocus required/> -->
+              <select ng-model="userRequirement.firstMajor" ng-options="track for track in firstMajors" class="form-control" required>
+              </select>
+            </div>            
+          </div>
+          <div class="form-group" ng-class="{'has-error': submitted && registerForm.secondMajor.$invalid }">
+            <label class="control-label col-md-3">Second Major</label>
+            <div class="col-md-3">
+              <!-- <input ng-model="requirement.secondMajor" name="secondMajor" typeahead="major for major in secondMajors | filter:$viewValue | limitTo:8" type="text" class="form-control" required/> -->
+              <select ng-model="userRequirement.secondMajor" ng-options="track for track in secondMajors" class="form-control" required>
+              </select>
+            </div>            
+          </div>
+
+          <div class="form-group">
+            <label class="control-label col-md-3">Exemptions</label>
+            <div class="col-md-9">
+              <ul id="exemptions">
+                <li ng-repeat="exemption in availableExemptions" ng-class="{'selected': exemption.selected }" ng-click="setExemptions(exemption, availableExemptions)">
+                  {{exemption.title}}
+                </li>              
+              </ul>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-md-9 col-md-offset-3">
+              <p class="help-block" ng-show="message"> {{ message }} </p>
+              <button type="submit" class="btn btn-primary">Save Changes</button>
+            </div>
+          </div>
+      </form>
+      </div>
+    </div>
+    <!-- End of major options settings -->
+
+    <!-- Password settings -->
+    <div ng-switch-when="1" class="panel panel-default">
       <div class="panel-heading">
         <h3 class="panel-title">Password</h3>
       </div>
@@ -54,72 +108,5 @@
     </div>
     <!-- End of password settings -->
 
-    <!-- Major options settings -->
-    <div ng-switch-when="1" class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title">Majors Options</h3>
-      </div>
-      <div class="panel-body">
-        <form ng-submit="updateProfile(registerForm)" name="registerForm" class="form-horizontal" novalidate>
-          <div class="form-group has-error" ng-show="errors.other">
-            <div class="col-md-6 col-md-offset-3">
-              <p class="help-block">
-                No matching combination found
-              </p>            
-            </div>
-          </div>
-
-          <div class="form-group" ng-class="{'has-error': submitted && registerForm.firstMajor.$invalid }">
-            <label class="control-label col-md-3">First Major</label>
-            <div class="col-md-3">
-              <!-- <input ng-model="requirement.firstMajor" name="firstMajor" typeahead="track for track in firstMajor | filter:$viewValue | limitTo:8" type="text" class="form-control" autofocus required/> -->
-              <select ng-model="userRequirement.firstMajor" ng-options="track for track in firstMajors" class="form-control" required>
-              </select>
-            </div>
-            <div class="col-md-6">
-              <p class="form-control-static">
-                <small>
-                  <em>Choose "No Track" if you are not sure.</em>
-                </small>
-              </p>
-            </div>
-          </div>
-          <div class="form-group" ng-class="{'has-error': submitted && registerForm.secondMajor.$invalid }">
-            <label class="control-label col-md-3">Second Major</label>
-            <div class="col-md-3">
-              <!-- <input ng-model="requirement.secondMajor" name="secondMajor" typeahead="major for major in secondMajors | filter:$viewValue | limitTo:8" type="text" class="form-control" required/> -->
-              <select ng-model="userRequirement.secondMajor" ng-options="track for track in secondMajors" class="form-control" required>
-              </select>
-            </div>
-            <div class="col-md-6">
-              <p class="form-control-static">
-                <small>
-                  <em>Choose "Undecided" if you are not sure.</em>
-                </small>
-              </p>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label class="control-label col-md-3">Exemptions</label>
-            <div class="col-md-9">
-              <ul id="exemptions">
-                <li ng-repeat="exemption in availableExemptions" ng-class="{'selected': exemption.selected }" ng-click="setExemptions(exemption, availableExemptions)">
-                  {{exemption.title}}
-                </li>              
-              </ul>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <div class="col-md-9 col-md-offset-3">
-              <p class="help-block" ng-show="message"> {{ message }} </p>
-              <button type="submit" class="btn btn-primary">Save Changes</button>
-            </div>
-          </div>
-      </form>
-      </div>
-    </div>
-    <!-- End of major options settings -->
   </div>
 </div>
