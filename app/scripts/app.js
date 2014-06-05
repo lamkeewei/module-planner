@@ -6,6 +6,7 @@ angular.module('modulePlannerApp', [
   'ngSanitize',
   'ngRoute',
   'ngAnimate',
+  'angular-loading-bar',
   'ui.bootstrap'
 ])
   .config(function ($routeProvider, $locationProvider, $httpProvider) {
