@@ -55,6 +55,9 @@ angular.module('modulePlannerApp', [
       };
     }]);
   })
+  .config(function(cfpLoadingBarProvider) {
+    cfpLoadingBarProvider.includeSpinner = false;
+  })
   .factory('_', function(){
     return window._;
   })
