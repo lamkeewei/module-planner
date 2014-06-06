@@ -1,10 +1,11 @@
 'use strict';
 
 angular.module('modulePlannerApp')
-  .controller('WelcomeCtrl', function ($scope, User, Auth, Course, _, $location) {
+  .controller('WelcomeCtrl', function ($scope, User, Auth, Course, _, $location, $timeout) {
     // initialization of variables
     $scope.step = 1;
     $scope.errors = {};
+    $scope.state = {};
     $scope.user = {};
     $scope.requirement = {
       firstMajor: 'No Track',
@@ -43,7 +44,7 @@ angular.module('modulePlannerApp')
       if(form.$valid) {
         Auth.changePassword( $scope.user.oldPassword, $scope.user.newPassword )
         .then( function() {
-          $scope.message = 'Password successfully changed.';
+          $scope.state.message = 'Password successfully changed.';
           $scope.step = 2;
           $scope.submitted = false;
           $scope.errors = {};
