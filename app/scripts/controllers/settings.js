@@ -13,7 +13,7 @@ angular.module('modulePlannerApp')
     User.getProfile(function(profile){
       $scope.userRequirement.firstMajor = profile.firstMajor;
       $scope.userRequirement.secondMajor = profile.secondMajor;
-      Course.findByCategory({ category: 'Exemption' }, function(exemptions){
+      Course.findByCategory({ category: 'Exemptions' }, function(exemptions){
         $scope.availableExemptions = exemptions;
 
         angular.forEach($scope.availableExemptions, function(ex, i){

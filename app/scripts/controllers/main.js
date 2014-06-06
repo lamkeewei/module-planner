@@ -25,6 +25,7 @@ angular.module('modulePlannerApp')
     // Filter options
     $scope.yearFilter = ['Year 1', 'Year 2', 'Year 3', 'Year 4'];
     $scope.semesterFilter = ['Semester 1', 'Semester 2'];
+    $scope.typeFilter = ['Compulsory', 'Exemptions'];
     $scope.activeFilters = [];
     $scope.status = {
       isOpen: false
@@ -53,19 +54,19 @@ angular.module('modulePlannerApp')
 
     // Display
     $scope.isStatic = function(course){
-      var exemption = _.indexOf(course.category, 'Exemption');
-      var preassigned = _.indexOf(course.category, 'Preassigned');
+      var exemption = _.indexOf(course.category, 'Exemptions');
+      var preassigned = _.indexOf(course.category, 'Compulsory');
       return exemption >= 0 || preassigned >= 0;
     };
 
     $scope.isExemption = function(course){
-      var exemption = _.indexOf(course.category, 'Exemption');
-      var preassigned = _.indexOf(course.category, 'Preassigned');
+      var exemption = _.indexOf(course.category, 'Exemptions');
+      var preassigned = _.indexOf(course.category, 'Compulsory');
       return exemption >= 0 && preassigned === -1;
     };
 
     $scope.isPreassigned = function(course){
-      var preassigned = _.indexOf(course.category, 'Preassigned');
+      var preassigned = _.indexOf(course.category, 'Compulsory');
       return preassigned >= 0;
     };
 

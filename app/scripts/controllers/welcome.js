@@ -15,7 +15,7 @@ angular.module('modulePlannerApp')
 
     $scope.firstMajors = ['No Track'];
     $scope.secondMajors = ['Undecided', 'Finance'];
-    $scope.exemptions = Course.findByCategory({ category: 'Exemption' });
+    $scope.exemptions = Course.findByCategory({ category: 'Exemptions' });
 
     $scope.setExemptions = function(exemption, exemptions){
       exemption.selected = !exemption.selected;
