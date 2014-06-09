@@ -45,4 +45,9 @@ angular.module('modulePlannerApp')
     $scope.changeView = function(index){
       $scope.activeView = index;
     };
+
+    $scope.selectExemption = function(exemption, form){
+      exemption.selected = !exemption.selected;
+      form.$setDirty();
+    };
   });
