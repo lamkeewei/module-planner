@@ -1,22 +1,33 @@
 'use strict';
 
 angular.module('modulePlannerApp')
-  .controller('WelcomeCtrl', function ($scope, User, Auth, Course, _, $location, $timeout) {
+  .controller('WelcomeCtrl', function ($scope, User, Auth, Course, _, $location, $timeout, Requirement) {
     // initialization of variables
     $scope.step = 1;
     $scope.errors = {};
     $scope.state = {};
     $scope.user = {
       firstMajor: 'No Track',
-      secondMajor: 'Finance'
+      secondMajor: 'Undecided'
     };
     $scope.requirement = {
       majors: ['Base'],
       exemptions: []
     };
 
-    $scope.firstMajors = ['No Track'];
-    $scope.secondMajors = ['Undecided', 'Finance'];
+    $scope.firstMajors = [{ major: 'No Track' }];
+    $scope.secondMajors = [{ major: 'Undecided' }];
+
+    Requirement.getType({ type: 1 }, function(firstMajors){
+      firstMajors = _.filter(firstMajors, function(el){
+        return el.major !== 'Base';
+      });
+
+      $scope.firstMajors = _.union($scope.firstMajors, firstMajors);
+    });
+    Requirement.getType({ type: 2 }, function(secondMajors){
+      $scope.secondMajors = _.union($scope.secondMajors, secondMajors);
+    });
     $scope.exemptions = Course.findByCategory({ category: 'Exemptions' });
 
     $scope.setExemptions = function(exemption, exemptions){
