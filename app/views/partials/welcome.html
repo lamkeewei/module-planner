@@ -56,7 +56,7 @@
           <label class="control-label col-md-3">First Major</label>
           <div class="col-md-3">
             <!-- <input ng-model="requirement.firstMajor" name="firstMajor" typeahead="track for track in firstMajor | filter:$viewValue | limitTo:8" type="text" class="form-control" autofocus required/> -->
-            <select ng-model="requirement.firstMajor" ng-options="track for track in firstMajors" class="form-control" required>
+            <select ng-model="user.firstMajor" ng-options="track for track in firstMajors" class="form-control" required>
             </select>
           </div>
           <div class="col-md-6">
@@ -71,7 +71,7 @@
           <label class="control-label col-md-3">Second Major</label>
           <div class="col-md-3">
             <!-- <input ng-model="requirement.secondMajor" name="secondMajor" typeahead="major for major in secondMajors | filter:$viewValue | limitTo:8" type="text" class="form-control" required/> -->
-            <select ng-model="requirement.secondMajor" ng-options="track for track in secondMajors" class="form-control" required>
+            <select ng-model="user.secondMajor" ng-options="track for track in secondMajors" class="form-control" required>
             </select>
           </div>
           <div class="col-md-6">

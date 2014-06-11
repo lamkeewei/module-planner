@@ -6,12 +6,14 @@ angular.module('modulePlannerApp')
     $scope.step = 1;
     $scope.errors = {};
     $scope.state = {};
-    $scope.user = {};
-    $scope.requirement = {
+    $scope.user = {
       firstMajor: 'No Track',
       secondMajor: 'Finance'
     };
-    $scope.requirement.exemptions = [];
+    $scope.requirement = {
+      majors: ['Base'],
+      exemptions: []
+    };
 
     $scope.firstMajors = ['No Track'];
     $scope.secondMajors = ['Undecided', 'Finance'];
@@ -29,6 +31,15 @@ angular.module('modulePlannerApp')
 
     $scope.register = function(form, requirement){
       $scope.submitted = true;
+
+      $scope.requirement.majors.push($scope.user.firstMajor);
+      $scope.requirement.majors.push($scope.user.secondMajor);
+
+      $scope.requirement.majors = _.filter($scope.requirement.majors, function(r){
+        return r !== 'Undecided' && r !== 'No Track';
+      });
+
+      console.log($scope.requirement.majors);
       if(form.$valid) {
         User.register(requirement, function(){
           $location.path('/');
