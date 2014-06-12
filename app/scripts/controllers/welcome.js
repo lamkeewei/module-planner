@@ -50,7 +50,6 @@ angular.module('modulePlannerApp')
         return r !== 'Undecided' && r !== 'No Track';
       });
 
-      console.log($scope.requirement.majors);
       if(form.$valid) {
         User.register(requirement, function(){
           $location.path('/');

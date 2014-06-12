@@ -1,18 +1,48 @@
 'use strict';
 
 angular.module('modulePlannerApp')
-  .controller('SettingsCtrl', function ($scope, $http, User, Course, _, $location) {
+  .controller('SettingsCtrl', function ($scope, $http, User, Course, _, $location, Requirement, Auth) {
     $scope.options = ['Majors Options', 'Password'];
     $scope.activeView = 0;
+    $scope.user = {};
+    $scope.errors = {};
+    $scope.state = {};
     $scope.userRequirement = {
-      firstMajor: 'No Track',
-      secondMajor: 'Finance'
+      majors: ['Base'],
+      exemptions: []
     };
-    $scope.userRequirement.exemptions = [];
     
+    // Intialize majors
+    $scope.firstMajors = [{ major: 'No Track' }];
+    $scope.secondMajors = [{ major: 'Undecided' }];
+
+    // Initialize user values
     User.getProfile(function(profile){
-      $scope.userRequirement.firstMajor = profile.firstMajor;
-      $scope.userRequirement.secondMajor = profile.secondMajor;
+      var majors = profile.majors;
+      var firstMajor = _.find(majors, function(el){
+        return el.type === 1 && el.major !== 'Base';
+      });
+
+      var secondMajor = _.find(majors, function(el){
+        return el.type === 2;
+      });
+
+      // Set first major
+      Requirement.getType({ type: 1 }, function(firstMajors){
+        firstMajors = _.filter(firstMajors, function(el){
+          return el.major !== 'Base';
+        });
+        $scope.firstMajors = _.union($scope.firstMajors, firstMajors);
+        $scope.userRequirement.firstMajor = firstMajor ? firstMajor.major : 'No Track';
+      });
+
+      // Set second major
+      Requirement.getType({ type: 2 }, function(secondMajors){
+        $scope.secondMajors = _.union($scope.secondMajors, secondMajors);
+        $scope.userRequirement.secondMajor = secondMajor ? secondMajor.major : 'Undecided';
+      });
+      
+      // Set exemptions
       Course.findByCategory({ category: 'Exemptions' }, function(exemptions){
         $scope.availableExemptions = exemptions;
 
@@ -32,8 +62,15 @@ angular.module('modulePlannerApp')
         }
         return arr;
       }, []);
+
+      var majors = ['Base', $scope.userRequirement.firstMajor, $scope.userRequirement.secondMajor];
+      majors = _.filter(majors, function(m){
+        return m !== 'Undecided' && m !== 'No Track';
+      });
+
       var data = {
-        exemptions: exemptions
+        exemptions: exemptions,
+        majors: majors
       };
       User.updateProfile(data, function(){
         $location.path('/');
@@ -49,5 +86,25 @@ angular.module('modulePlannerApp')
     $scope.selectExemption = function(exemption, form){
       exemption.selected = !exemption.selected;
       form.$setDirty();
+    };
+
+    $scope.changePassword = function(form) {
+      $scope.submitted = true;
+
+      if(form.$valid) {
+        Auth.changePassword( $scope.user.oldPassword, $scope.user.newPassword )
+        .then( function() {
+          $scope.state.message = 'Password successfully changed.';
+          $scope.step = 2;
+          $scope.submitted = false;
+          $scope.errors = {};
+          $scope.user.oldPassword = '';
+          $scope.user.newPassword = '';
+        })
+        .catch( function() {
+          form.password.$setValidity('mongoose', false);
+          $scope.errors.other = 'Incorrect password';
+        });
+      }
     };
   });
