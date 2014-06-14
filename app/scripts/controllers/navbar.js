@@ -2,7 +2,7 @@
 
 angular.module('modulePlannerApp')
   .controller('NavbarCtrl', function ($scope, $location, Auth, _) {
-    $scope.menu = [
+    $scope.master = [
       {
         link: '/settings',
         title: 'Settings',
@@ -25,12 +25,22 @@ angular.module('modulePlannerApp')
       }
     ];
 
-    if ($scope.currentUser && $scope.currentUser.role !== 'admin') {
-      $scope.menu = _.filter($scope.menu, function(item){        
-        return !item.isAdmin;
-      });
-    }
     
+    $scope.$watch('currentUser', function(newVal, oldVal){
+      $scope.filterMenuItems();
+    }, true);
+
+    $scope.filterMenuItems = function(){
+      if ($scope.currentUser && $scope.currentUser.role !== 'admin') {
+        $scope.menu = _.filter($scope.master, function(item){
+          return !item.isAdmin;
+        });
+      } else {
+        $scope.menu = $scope.master;
+      }
+    };
+
+
     $scope.logout = function() {
       Auth.logout()
       .then(function() {
