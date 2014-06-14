@@ -34,6 +34,11 @@ angular.module('modulePlannerApp', [
         controller: 'SettingsCtrl',
         authenticate: true
       })
+      .when('/users', {
+        templateUrl: 'partials/users',
+        // controller: 'SettingsCtrl',
+        authenticate: true
+      })
       .otherwise({
         redirectTo: '/'
       });

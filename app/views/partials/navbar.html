@@ -14,8 +14,13 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse navbar-ex1-collapse">
       <ul ng-show="currentUser" class="nav navbar-nav">
-        <li ng-repeat="item in menu">
-          <a ng-class="{active: isActive(item.link)}" ng-href="{{item.link}}">{{item.title}}</a>
+        <li ng-repeat="item in menu" ng-class="{ dropdown: item.isDropdown }">
+
+          <a ng-class="{active: isActive(item.link), 'dropdown-toggle': item.isDropdown}" ng-href="{{item.link}}" data-toggle="dropdown">{{item.title}} <b class="caret" ng-show="item.isDropdown"></b></a>
+
+          <ul class="dropdown-menu" ng-show="item.isDropdown">
+            <li ng-repeat="i in item.dropdown"><a ng-href="{{i.link}}">{{i.title}}</a></li>
+          </ul>
         </li>
       </ul>
 
