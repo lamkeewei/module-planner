@@ -36,7 +36,7 @@ angular.module('modulePlannerApp', [
       })
       .when('/users', {
         templateUrl: 'partials/users',
-        // controller: 'SettingsCtrl',
+        controller: 'UserCtrl',
         authenticate: true
       })
       .otherwise({
