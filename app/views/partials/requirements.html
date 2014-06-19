@@ -1,0 +1,37 @@
+<div class="row">
+  <div class="col-md-8">
+    <div class="panel panel-info">
+      <div class="panel-heading">Course Requirement</div>
+      <div class="panel-body">
+         
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="panel panel-info">
+      <div class="panel-heading">Categories</div>
+      <div class="panel-body">          
+        <div class="form-group">
+          <div class="input-group">
+            <input type="text" class="form-control" ng-model="search.term">
+            <span class="input-group-addon">
+              <span class="glyphicon glyphicon-search"></span>
+            </span>
+          </div>
+        </div>
+      </div>
+      <table class="table table-hover" id="categories-table">
+        <tbody>
+          <tr ng-repeat="category in categories | filter: search.term" draggable="true" class="selector">
+            <td>
+              <i class="fa fa-bars"></i>
+            </td>
+            <td>
+              {{category}}
+            </td>
+          </tr>          
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

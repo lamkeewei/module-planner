@@ -18,7 +18,7 @@ angular.module('modulePlannerApp')
             link: '/users',
             title: 'Manage Courses'
           }, {
-            link: '/users',
+            link: '/requirements',
             title: 'Manage Requirements'
           }
         ]

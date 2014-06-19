@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('modulePlannerApp')
-  .factory('Admin', function () {
+  .factory('Admin', function ($resource) {
     return $resource('/api/admin/:resource', {}, {
       createUser: {
         method: 'POST',
@@ -9,5 +9,5 @@ angular.module('modulePlannerApp')
           resource: 'users'
         }
       }
-    })
+    });
   });

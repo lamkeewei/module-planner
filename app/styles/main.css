@@ -302,3 +302,16 @@ div[ng-view].ng-enter {
 #time-title {
   margin-bottom: 30px;
 }
+
+.selector:hover {
+  cursor: move;
+}
+
+#categories-table {
+  table-layout: fixed;
+}
+
+#categories-table tbody td:first-child{
+  text-align: center;
+  width: 10%;
+}

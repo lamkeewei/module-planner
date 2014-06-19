@@ -39,6 +39,11 @@ angular.module('modulePlannerApp', [
         controller: 'UserCtrl',
         authenticate: true
       })
+      .when('/requirements', {
+        templateUrl: 'partials/requirements',
+        controller: 'RequirementsCtrl',
+        authenticate: true
+      })
       .otherwise({
         redirectTo: '/'
       });
