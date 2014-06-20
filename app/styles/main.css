@@ -334,7 +334,7 @@ div[ng-view].ng-enter {
 }
 
 .panel-table-wrapper {
-  height: 250px;
+  height: 110px;
   overflow-y: scroll;
 }
 
@@ -347,7 +347,7 @@ div[ng-view].ng-enter {
 }
 
 .preassigned-table tbody td:last-child {
-  width: 5.5%;
+  width: 5%;
 }
 
 .preassigned-table tbody td:nth-child(2) {
@@ -379,4 +379,29 @@ div[ng-view].ng-enter {
 
 .new-category-hover {
   background-color: aliceblue; 
+}
+
+#major-table {
+  table-layout: fixed;
+}
+
+#major-table tbody td:first-child {
+  text-align: center;
+  width: 12.5%;
+}
+
+#major-table tbody td:last-child {
+  text-align: center;
+  width: 12.5%;
+}
+
+.subtype-heading{
+  margin-top: 15px;
+  box-sizing: border-box;
+  background-color: #f5f5f5;
+  width: 100%;
+  border: solid #ddd 1px;
+  border-left: none;
+  border-right: none;
+  padding: 10px 15px;
 }

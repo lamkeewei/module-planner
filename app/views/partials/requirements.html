@@ -2,13 +2,15 @@
   <div class="col-md-8 scroll-y" full-height="90">
     <div id="new-category" droppable="addNewRequirement(data)" hover-class="new-category-hover">
       <p>
-        Drop a new category here
+        Drop new category here
       </p>
     </div>
-    <div ng-repeat="requirement in base.requirements" class="panel panel-default" droppable="addToList(requirement.type, requirement.courses, data)" hover-class="panel-info">
+
+    <div ng-repeat="requirement in base.requirements" class="panel panel-default" droppable="addToList(requirement.type, requirement, data)" hover-class="panel-info">
       <div class="panel-heading">{{requirement.type}} 
         <div class="pull-right">          
-          <span class="badge">{{requirement.qtyRequired}}</span>
+          <!-- <span class="badge">{{requirement.qtyRequired}}</span> -->
+          <span ng-show="requirement.isAdded" ng-click="removeNewRequirement(requirement, $index)" class="pointer glyphicon glyphicon-remove"></span>
         </div>
       </div>
       <div class="panel-body">
@@ -28,9 +30,67 @@
           </tr>
         </tbody>
       </table>
-    </div>
+      <div ng-repeat="subtype in requirement.subtypes">        
+        <div class="subtype-heading">{{subtype.type}}</div>
+        <div class="panel-body"></div>
+      </div>
+    </div>    
   </div>
-  <div class="col-md-4 scroll-y" full-height="90">
+  <div class="col-md-4 scroll-y" full-height="90">    
+    <div class="panel panel-default">
+      <div class="panel-heading">Save</div>
+      <div class="panel-body">
+        <form name="requirementForm" novalidate>
+          <div class="form-group" ng-class="{'has-error': requirementForm.title.$error.required && flags.submitted}">
+            <input type="text" name="title" ng-model="requirement.major" class="form-control" placeholder="Major Title" required/>
+          </div>
+          <div class="form-group">
+            <select class="form-control" ng-model="requirement.type" name="type">
+              <option value="1">Primary Major Track</option>
+              <option value="2">Second Major</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <input type="submit" class="pull-right btn btn-success" value="Save Major" ng-disabled="requirementForm.$pristine || !hasChanged()" />
+          </div>
+        </form>
+      </div>
+    </div>  
+
+    <div class="panel panel-default">
+      <div class="panel-heading">Majors</div>
+      <div class="panel-body">
+         <div class="form-group">
+          <div class="input-group">
+            <input type="text" class="form-control" ng-model="search.major">
+            <span class="input-group-addon">
+              <span class="glyphicon glyphicon-search"></span>
+            </span>
+          </div>
+        </div>
+
+        <div class="panel-table-wrapper">        
+        <table class="table table-hover" id="major-table">
+          <tbody>
+            <tr ng-class="{'info': major.active}" ng-repeat="(key, major) in requirements">
+              <td>
+                <!-- <i tooltip="Select major" class="fa fa-bars pointer" ng-click="selectMajor(major)"></i> -->
+                <input type="checkbox" ng-click="selectMajor(major)" ng-checked="major.active"/>
+              </td>
+              <td>
+                {{key}}
+              </td>
+              <td>
+                <span ng-show="key !== 'Base'" class="glyphicon glyphicon-remove-circle pointer" tooltip="Delete Major"></span>
+              </td>
+            </tr>          
+          </tbody>
+        </table>
+      </div>
+      </div>
+    </div>
+  
+
     <div class="panel panel-default selector-panel">
       <div class="panel-heading">Categories</div>
       <div class="panel-body">          
@@ -47,7 +107,7 @@
       </div>
       <table class="table table-hover" id="categories-table">
         <tbody>
-          <tr ng-repeat="category in categories | filter: search.term" draggable="category" class="selector">
+          <tr ng-repeat="category in categories" draggable="category" class="selector">
             <td>
               <i class="fa fa-bars"></i>
             </td>
