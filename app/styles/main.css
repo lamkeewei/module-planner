@@ -315,3 +315,50 @@ div[ng-view].ng-enter {
   text-align: center;
   width: 10%;
 }
+
+#course-table {
+  table-layout: fixed;
+}
+
+#course-table tbody td:first-child{
+  text-align: center;
+  width: 10%;
+}
+
+.drop-zone {
+  border: dashed gainsboro 2px;
+}
+
+.drop-cell {
+  padding: 20px !important
+}
+
+.panel-table-wrapper {
+  height: 250px;
+  overflow-y: scroll;
+}
+
+.preassigned-table {
+  table-layout: fixed;
+}
+
+.preassigned-table tbody td:first-child {
+  width: 7.5%;
+}
+
+.preassigned-table tbody td:last-child {
+  width: 5.5%;
+}
+
+.preassigned-table tbody td:nth-child(2) {
+  width: 15%;
+}
+
+.pointer:hover {
+  cursor: pointer;
+}
+
+#category-area {
+  height: 600px;
+  overflow-y: scroll;
+}

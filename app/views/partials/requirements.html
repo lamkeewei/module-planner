@@ -1,14 +1,32 @@
 <div class="row">
-  <div class="col-md-8">
-    <div class="panel panel-info">
-      <div class="panel-heading">Course Requirement</div>
-      <div class="panel-body">
-         
+  <div class="col-md-8" id="category-area">
+    <div ng-repeat="requirement in base.requirements" class="panel panel-default" droppable="addToList(requirement.type, requirement.courses, data)" hover-class="panel-info">
+      <div class="panel-heading">{{requirement.type}} 
+        <div class="pull-right">          
+          <span class="badge">{{requirement.qtyRequired}}</span>
+        </div>
       </div>
+      <div class="panel-body">
+        <strong>Preassigned:</strong>
+      </div>
+      <table class="table table-hover preassigned-table">
+        <tbody>
+          <tr ng-repeat="course in requirement.courses">
+            <td class="text-center"><i class="fa fa-bars"></i></td>
+            <td>{{course.courseId.code}}</td>
+            <td>{{course.courseId.title}}</td>
+            <td><span tooltip="Remove" ng-show="course.isAdded" class="pointer glyphicon glyphicon-remove-circle" ng-click="remove(requirement.courses, $index)"></span></td>
+          </tr>
+
+          <tr ng-hide="requirement.courses.length > 0">
+            <td colspan="3" class="text-center">No preassigned</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
   <div class="col-md-4">
-    <div class="panel panel-info">
+    <div class="panel panel-default">
       <div class="panel-heading">Categories</div>
       <div class="panel-body">          
         <div class="form-group">
@@ -22,7 +40,7 @@
       </div>
       <table class="table table-hover" id="categories-table">
         <tbody>
-          <tr ng-repeat="category in categories | filter: search.term" draggable="true" class="selector">
+          <tr ng-repeat="category in categories | filter: search.term" draggable="category" class="selector">
             <td>
               <i class="fa fa-bars"></i>
             </td>
@@ -32,6 +50,34 @@
           </tr>          
         </tbody>
       </table>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">Modules</div>
+      <div class="panel-body">
+         <div class="form-group">
+          <div class="input-group">
+            <input type="text" class="form-control" ng-model="search.module">
+            <span class="input-group-addon">
+              <span class="glyphicon glyphicon-search"></span>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="panel-table-wrapper">        
+        <table class="table table-hover" id="course-table">
+          <tbody>
+            <tr ng-repeat="course in courses | filter: search.module" draggable="course" class="selector">
+              <td>
+                <i class="fa fa-bars"></i>
+              </td>
+              <td>
+                {{course.title}}
+              </td>
+            </tr>          
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </div>
