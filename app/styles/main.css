@@ -358,7 +358,7 @@ div[ng-view].ng-enter {
   cursor: pointer;
 }
 
-#category-area {
+.scroll-y {
   height: 600px;
   overflow-y: scroll;
 }

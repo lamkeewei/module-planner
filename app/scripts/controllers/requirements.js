@@ -71,4 +71,9 @@ angular.module('modulePlannerApp')
 
       $scope.courses.unshift(course.courseId);
     };
+
+    $scope.addNewCategory = function(category){
+      $scope.categories.push(category);
+      $scope.search.term = '';
+    };
   });

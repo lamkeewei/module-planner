@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-md-8" id="category-area">
+  <div class="col-md-8 scroll-y" full-height="90">
     <div ng-repeat="requirement in base.requirements" class="panel panel-default" droppable="addToList(requirement.type, requirement.courses, data)" hover-class="panel-info">
       <div class="panel-heading">{{requirement.type}} 
         <div class="pull-right">          
@@ -25,15 +25,17 @@
       </table>
     </div>
   </div>
-  <div class="col-md-4">
-    <div class="panel panel-default">
+  <div class="col-md-4 scroll-y" full-height="90">
+    <div class="panel panel-default selector-panel">
       <div class="panel-heading">Categories</div>
       <div class="panel-body">          
         <div class="form-group">
           <div class="input-group">
             <input type="text" class="form-control" ng-model="search.term">
-            <span class="input-group-addon">
-              <span class="glyphicon glyphicon-search"></span>
+            <span class="input-group-btn">
+              <button class="btn btn-primary" ng-click="addNewCategory(search.term)">
+                <small><span class="glyphicon glyphicon-plus"></span></small>
+              </button>
             </span>
           </div>
         </div>
@@ -52,7 +54,7 @@
       </table>
     </div>
 
-    <div class="panel panel-default">
+    <div class="panel panel-default selector-panel">
       <div class="panel-heading">Modules</div>
       <div class="panel-body">
          <div class="form-group">
