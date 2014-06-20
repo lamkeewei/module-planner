@@ -1,5 +1,10 @@
 <div class="row">
   <div class="col-md-8 scroll-y" full-height="90">
+    <div id="new-category" droppable="addNewRequirement(data)" hover-class="new-category-hover">
+      <p>
+        Drop a new category here
+      </p>
+    </div>
     <div ng-repeat="requirement in base.requirements" class="panel panel-default" droppable="addToList(requirement.type, requirement.courses, data)" hover-class="panel-info">
       <div class="panel-heading">{{requirement.type}} 
         <div class="pull-right">          

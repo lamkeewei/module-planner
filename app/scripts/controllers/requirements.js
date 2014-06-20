@@ -6,7 +6,7 @@ angular.module('modulePlannerApp')
     $scope.flags = {
       show: ''
     };
-    $scope.categories = ['University Core', 'Economics Major', 'Economics Major Related'];
+    $scope.categories = [];
     $scope.requirement = {
       major: 'Test',
       preassigned: [],
@@ -49,6 +49,9 @@ angular.module('modulePlannerApp')
     };
 
     $scope.addToList = function(category, list, course){
+      if (!course.code) {
+        return;
+      }
       var data = {
         category: category,
         courseId: course,
@@ -75,5 +78,15 @@ angular.module('modulePlannerApp')
     $scope.addNewCategory = function(category){
       $scope.categories.push(category);
       $scope.search.term = '';
+    };
+
+    $scope.addNewRequirement = function(data){
+      var requirement = {
+        type: data,
+        qtyRequired: 0,
+        courses: []
+      };
+
+      $scope.base.requirements.unshift(requirement);
     };
   });

@@ -362,3 +362,21 @@ div[ng-view].ng-enter {
   height: 600px;
   overflow-y: scroll;
 }
+
+#new-category {
+  height: 75px;
+  width: 100%;
+  border: dashed gainsboro 2px;
+  margin-bottom: 15px;
+  display: table;
+}
+
+#new-category p{
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+}
+
+.new-category-hover {
+  background-color: aliceblue; 
+}
