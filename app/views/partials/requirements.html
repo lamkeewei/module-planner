@@ -7,7 +7,7 @@
     </div>
     
     <!-- Panels -->
-    <div ng-repeat="requirement in base.requirements" class="panel panel-primary">
+    <div ng-repeat="requirement in base.requirements" class="panel panel-primary" droppable="addSubtype(data, requirement)" hover-class"panel-info">
       <div class="panel-heading">{{requirement.type}} 
         <div class="pull-right">          
           <span ng-show="requirement.isAdded" ng-click="removeNewRequirement(requirement, $index)" class="pointer glyphicon glyphicon-remove"></span>
@@ -30,8 +30,13 @@
           </tr>
         </tbody>
       </table>
-      <div ng-repeat="subtype in requirement.subtypes">        
-        <div class="subtype-heading">{{subtype.type}}</div>
+      <div ng-repeat="subtype in requirement.subtypes">
+        <div class="subtype-heading">
+          {{subtype.type}}
+          <div class="pull-right">          
+            <span ng-show="subtype.isAdded" ng-click="removeSubtype(subtype, requirement, $index)" class="pointer glyphicon glyphicon-remove"></span>
+          </div>
+        </div>
         <div class="panel-body">
           <strong>Preassigned:</strong>
         </div>

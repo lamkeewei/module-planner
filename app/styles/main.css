@@ -414,3 +414,6 @@ div[ng-view].ng-enter {
   padding: 10px 15px;
 }
 
+.hover-header {
+  background-color: aliceblue;
+}

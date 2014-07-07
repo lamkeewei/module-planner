@@ -68,21 +68,11 @@ angular.module('modulePlannerApp')
       console.log(data);
     };
 
-    $scope.addSubtype = function(subtype, requirement){
-      var s = {
-        type: subtype,
-        qtyRequired: 0,
-        courses: [],
-        isAdded: true
-      };
-
-      requirement.subtypes.push(s);
-      _.remove($scope.categories, function(type){
-        return type === subtype;
-      });
-    };
-
     $scope.addToList = function(category, requirement, course){
+      if (!course.code) {
+        return;
+      }
+
       if (!requirement.courses) {
         requirement.courses = [];
       }
@@ -120,6 +110,31 @@ angular.module('modulePlannerApp')
       $scope.search.term = '';
     };
 
+    $scope.addSubtype = function(data, main){
+      if (data.code) {
+        // Prevent dropping of course
+        return;
+      }
+
+      if (main.subtypes) {
+        main.subtypes = [];
+      }
+
+      _.remove($scope.categories, function(type){
+        return type === data;
+      });
+
+      var subtype = {
+        type: data,
+        qtyRequired: 0,
+        courses: [],
+        isAdded: true
+      };
+
+      main.subtypes.push(subtype);
+      $scope.requirement.requirements.push(main);
+    };
+
     $scope.addNewRequirement = function(data){
       if (data.code) {
         return;
@@ -152,6 +167,30 @@ angular.module('modulePlannerApp')
       _.remove($scope.requirement.requirements, function(r){
         return r.type === requirement.type;
       });
+    };
+
+    $scope.removeSubtype = function(subtype, main, index){
+      $scope.categories.unshift(subtype.type);
+      angular.forEach(subtype.courses, function(course){
+        _.remove($scope.requirement.preassigned, function(el){
+          return el.courseId.code === course.courseId.code;
+        });
+      });
+
+      main.subtypes.splice(index, 1);
+      if (main.subtypes.length < 1) {
+        _.remove($scope.requirement.requirements, function(r){
+          return r.type === main.type;
+        });
+      } else {
+        angular.forEach($scope.requirement.requirements, function(r){
+          if (r.type === main.type){
+            _.remove(main.subtypes, function(s){
+              return s.type === subtype.type;
+            });
+          }
+        });
+      }
     };
 
     $scope.hasChanged = function(){
