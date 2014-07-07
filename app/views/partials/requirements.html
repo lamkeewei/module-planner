@@ -7,7 +7,7 @@
     </div>
     
     <!-- Panels -->
-    <div ng-repeat="requirement in base.requirements" class="panel panel-primary" droppable="addSubtype(data, requirement)" hover-class"panel-info">
+    <div ng-repeat="requirement in base.requirements" class="panel panel-primary" droppable="addSubtype(data, requirement)" hover-class="panel-info">
       <div class="panel-heading">{{requirement.type}} 
         <div class="pull-right">          
           <span ng-show="requirement.isAdded" ng-click="removeNewRequirement(requirement, $index)" class="pointer glyphicon glyphicon-remove"></span>
@@ -74,7 +74,7 @@
             </select>
           </div>
           <div class="form-group">
-            <input type="submit" class="pull-right btn btn-success" value="Save Major" ng-disabled="requirementForm.$pristine || !hasChanged()" />
+            <input type="submit" class="pull-right btn btn-success" value="Save Major" ng-disabled="requirementForm.$pristine || !hasChanged()" ng-click="addMajor()"/>
           </div>
         </form>
       </div>

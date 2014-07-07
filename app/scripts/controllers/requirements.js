@@ -116,7 +116,7 @@ angular.module('modulePlannerApp')
         return;
       }
 
-      if (main.subtypes) {
+      if (!main.subtypes) {
         main.subtypes = [];
       }
 
@@ -132,7 +132,11 @@ angular.module('modulePlannerApp')
       };
 
       main.subtypes.push(subtype);
-      $scope.requirement.requirements.push(main);
+
+      var match = _.findIndex($scope.requirement.requirements, { type: main.type});
+      if (match < 0) {
+        $scope.requirement.requirements.push(main);
+      }
     };
 
     $scope.addNewRequirement = function(data){
@@ -243,5 +247,9 @@ angular.module('modulePlannerApp')
       } else {
         $scope.requirement = angular.copy($scope.newRequirement);
       }
+    };
+
+    $scope.addMajor = function(){
+      console.log($scope.requirement);
     };
   });
