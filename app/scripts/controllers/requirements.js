@@ -17,9 +17,12 @@ angular.module('modulePlannerApp')
     $scope.requirement = angular.copy($scope.newRequirement);
 
     Requirement.getMajor({ major: 'Base' }, function(base){
-      $scope.originalBase = base;
-      $scope.base = angular.copy(base);
+      // Store the original base for use later
+      $scope.base = base;
+      // Group the preassigned for easy access
       var preassigned = _.groupBy(base.preassigned, 'category');
+
+      // intiialize the preassigned 
       angular.forEach($scope.base.requirements, function(el){
         var pre = preassigned[el.type];
         if (pre) {
@@ -29,6 +32,10 @@ angular.module('modulePlannerApp')
         }
       });
 
+      $scope.originalBase = angular.copy($scope.base);
+
+      // Get all the requirements and flatten them into a (kev, value) data structure
+      // for easy access
       Requirement.query(function(requirements){
         $scope.requirements = _.reduce(requirements, function(obj, el){
           obj[el.major] = el;
@@ -38,6 +45,7 @@ angular.module('modulePlannerApp')
         $scope.requirements.Base.active = true;
       });
 
+      // Retrieve all the courses
       Course.query(function(courses){
         $scope.courses = courses;
 
@@ -75,18 +83,17 @@ angular.module('modulePlannerApp')
     };
 
     $scope.addToList = function(category, requirement, course){
-      var list = requirement.courses;
-      if (!course.code) {
-        // It is a subtype
-        $scope.addSubtype(course, requirement);
-        return;
+      if (!requirement.courses) {
+        requirement.courses = [];
       }
+
       var data = {
         category: category,
         courseId: course,
         isAdded: true
       };
-      list.push(data);
+
+      requirement.courses.push(data);
       $scope.requirement.preassigned.push(data);
 
       _.remove($scope.courses, function(el){
@@ -153,29 +160,47 @@ angular.module('modulePlannerApp')
 
     $scope.addRequirement = function(requirement){
       var requirements = requirement.requirements;
-      $scope.base.requirements = $scope.base.requirements.concat(requirements);
+      var major = requirement.major;
+      // Check if the current type exists already anot
+      requirements.forEach(function(r){
+        var type = r.type;
+        var match = _.findIndex($scope.base.requirements, { type: type });
+
+        if (match > -1) {
+          var original = $scope.base.requirements[match];
+          if (!r.courses) {
+            r.courses = [];
+          }
+          // Concat the list of requirements
+          r.courses = r.courses.concat(original.courses);
+          $scope.base.requirements[match] = r;
+        } else {
+          $scope.base.requirements = $scope.base.requirements.concat(r);
+        }
+      });
     };
 
     $scope.selectMajor = function(major){
-      if (major.active) {
-        angular.forEach($scope.requirements, function(value, key){
-          value.active = false;
-        });
+      // Reset to original base first
+      $scope.base = angular.copy($scope.originalBase);
 
-        $scope.requirements.Base.active = true;
-        $scope.requirement = $scope.newRequirement;
-        // $scope.base = $scope.originalBase;
-        return;
-      }
-
+      // Reset active flags for requirements
       angular.forEach($scope.requirements, function(value, key){
         value.active = false;
       });
 
+      // Check if they selected the same one again
+      if (major.active) {
+        $scope.requirements.Base.active = true;
+        $scope.requirement = $scope.newRequirement;
+        return;
+      }
+
+      // Set active on the selected one
       major.active = true;
       if (major.major !== 'Base') {
         $scope.requirement = major;
-        // $scope.addRequirement(major);
+        $scope.addRequirement(major);
       } else {
         $scope.requirement = angular.copy($scope.newRequirement);
       }

@@ -5,18 +5,18 @@
         Drop new category here
       </p>
     </div>
-
-    <div ng-repeat="requirement in base.requirements" class="panel panel-default" droppable="addToList(requirement.type, requirement, data)" hover-class="panel-info">
+    
+    <!-- Panels -->
+    <div ng-repeat="requirement in base.requirements" class="panel panel-primary">
       <div class="panel-heading">{{requirement.type}} 
         <div class="pull-right">          
-          <!-- <span class="badge">{{requirement.qtyRequired}}</span> -->
           <span ng-show="requirement.isAdded" ng-click="removeNewRequirement(requirement, $index)" class="pointer glyphicon glyphicon-remove"></span>
         </div>
       </div>
       <div class="panel-body">
         <strong>Preassigned:</strong>
       </div>
-      <table class="table table-hover preassigned-table">
+      <table class="table table-hover preassigned-table" droppable="addToList(requirement.type, requirement, data)" hover-class="drop-hover">
         <tbody>
           <tr ng-repeat="course in requirement.courses">
             <td class="text-center"><i class="fa fa-bars"></i></td>
@@ -32,10 +32,28 @@
       </table>
       <div ng-repeat="subtype in requirement.subtypes">        
         <div class="subtype-heading">{{subtype.type}}</div>
-        <div class="panel-body"></div>
+        <div class="panel-body">
+          <strong>Preassigned:</strong>
+        </div>
+        <table class="table table-hover preassigned-table subtype-table" droppable="addToList(subtype.type, subtype, data)" hover-class="drop-hover">
+          <tbody>
+            <tr ng-repeat="course in subtype.courses">
+              <td class="text-center"><i class="fa fa-bars"></i></td>
+              <td>{{course.courseId.code}}</td>
+              <td>{{course.courseId.title}}</td>
+              <td><span tooltip="Remove" ng-show="course.isAdded" class="pointer glyphicon glyphicon-remove-circle" ng-click="remove(subtype.courses, $index)"></span></td>
+            </tr>
+
+            <tr ng-hide="subtype.courses.length > 0">
+              <td colspan="3" class="text-center">No preassigned</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>    
   </div>
+
+  <!-- Controls -->
   <div class="col-md-4 scroll-y" full-height="90">    
     <div class="panel panel-default">
       <div class="panel-heading">Save</div>
@@ -74,7 +92,6 @@
           <tbody>
             <tr ng-class="{'info': major.active}" ng-repeat="(key, major) in requirements">
               <td>
-                <!-- <i tooltip="Select major" class="fa fa-bars pointer" ng-click="selectMajor(major)"></i> -->
                 <input type="checkbox" ng-click="selectMajor(major)" ng-checked="major.active"/>
               </td>
               <td>

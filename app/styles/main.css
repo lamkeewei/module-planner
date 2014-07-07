@@ -354,6 +354,14 @@ div[ng-view].ng-enter {
   width: 15%;
 }
 
+.preassigned-table.drop-hover tbody tr td {
+  background-color: aliceblue;
+}
+
+.subtype-table {
+  margin-bottom: 0px;
+}
+
 .pointer:hover {
   cursor: pointer;
 }
@@ -405,3 +413,4 @@ div[ng-view].ng-enter {
   border-right: none;
   padding: 10px 15px;
 }
+
