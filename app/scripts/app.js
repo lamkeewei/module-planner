@@ -39,6 +39,11 @@ angular.module('modulePlannerApp', [
         controller: 'UserCtrl',
         authenticate: true
       })
+      .when('/course', {
+        templateUrl: 'partials/course',
+        controller: 'CourseCtrl',
+        authenticate: true
+      })
       .when('/requirements', {
         templateUrl: 'partials/requirements',
         controller: 'RequirementsCtrl',

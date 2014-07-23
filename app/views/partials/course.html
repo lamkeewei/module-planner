@@ -1,0 +1,61 @@
+<div class="row">
+  <div class="col-md-12 well">
+    <div class="form-group col-md-4">
+      <label class="control-label">Search:</label>
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="Course title" ng-model="search.title">
+        <span class="input-group-addon">
+          <span class="glyphicon glyphicon-search"></span>
+        </span>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <label class="control-label">Options</label>
+      <div>
+        <button class="btn btn-success">Add Course</button>
+        <button class="btn btn-danger">Delete Course</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <table id="course-table" class="table table-hover table-striped">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Code</th>
+          <th>Title</th>
+          <th>Categories</th>
+          <th>Double Count</th>
+          <th class="text-center"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="course in courses | filter:search" ng-class="{'info': course.active}">
+          <td>
+            <input type="checkbox" ng-model="course.active"/>
+          </td>
+          <td>{{course.code}}</td>
+          <td>{{course.title}}</td>
+          <td>
+            <ul>
+              <li ng-repeat="category in course.category">{{category}}</li>
+            </ul>
+          </td>
+          <td>
+            <ul>
+              <li ng-repeat="course in course.doubleCount">{{course.replace}}</li>
+              <li ng-show="course.doubleCount.length < 1"> - </li>
+            </ul>
+          </td>
+          <td class="text-center">
+            <span tooltip="Edit" class="button glyphicon glyphicon-edit"></span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -160,6 +160,11 @@ angular.module('modulePlannerApp')
 
     $scope.removeNewRequirement = function(requirement, index){
       $scope.categories.unshift(requirement.type);
+      if (requirement.subtypes) {
+        angular.forEach(requirement.subtypes, function(sub){
+          $scope.categories.unshift(sub.type);
+        });
+      }
 
       angular.forEach(requirement.courses, function(course){
         _.remove($scope.requirement.preassigned, function(el){
