@@ -3,7 +3,7 @@
     <div class="form-group col-md-4">
       <label class="control-label">Search:</label>
       <div class="input-group">
-        <input type="text" class="form-control" placeholder="Course title" ng-model="search.title">
+        <input type="text" class="form-control" placeholder="Course title" ng-model="search.$">
         <span class="input-group-addon">
           <span class="glyphicon glyphicon-search"></span>
         </span>
@@ -13,8 +13,7 @@
     <div class="col-md-6">
       <label class="control-label">Options</label>
       <div>
-        <button class="btn btn-success">Add Course</button>
-        <button class="btn btn-danger">Delete Course</button>
+        <button class="btn btn-success" ng-click="addCourse()">Add Course</button>
       </div>
     </div>
   </div>
@@ -52,7 +51,8 @@
             </ul>
           </td>
           <td class="text-center">
-            <span tooltip="Edit" class="button glyphicon glyphicon-edit"></span>
+            <span tooltip="Edit" ng-click="editCourse(course)" class="button glyphicon glyphicon-edit"></span>
+            <span tooltip="Delete" ng-click="deleteCourse(course, $index)" class="button glyphicon glyphicon-trash"></span>
           </td>
         </tr>
       </tbody>

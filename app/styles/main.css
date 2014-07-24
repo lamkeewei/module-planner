@@ -217,7 +217,7 @@ div[ng-view].ng-enter {
   }
 }
 
-.modal-content {
+.modal-content.browse {
   margin-top: 20%;
   width: 450px;
   margin-left: auto;
@@ -416,4 +416,42 @@ div[ng-view].ng-enter {
 
 .hover-header {
   background-color: aliceblue;
+}
+
+#course-table ul {
+  list-style: none;
+  padding-left: 0px;
+}
+
+#course-table {
+  table-layout: fixed;
+}
+
+#course-table th:first-child {
+  width: 5%;
+}
+
+#course-table th:last-child {
+  width: 10%;
+}
+
+#course-table th:nth-child(2){
+  width: 10%;
+}
+
+#course-table th:nth-child(3){
+  width: 30%;
+}
+
+#course-table th:nth-child(4),
+#course-table th:nth-child(5) {
+  width: 22.5%;
+}
+
+.button {
+  cursor: pointer;
+}
+
+#course-form .label{
+  margin-right: 5px;
 }

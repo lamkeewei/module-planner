@@ -1,0 +1,84 @@
+<div>
+  <div class="modal-body">
+    <h1>Add Course</h1>
+    <hr>
+    <form id="course-form" name="courseForm" class="form-horizontal" role="form" novalidate>
+      <div class="form-group">
+        <label class="control-label col-md-3">Code</label>
+        <div class="col-md-9">
+          <input type="text" class="form-control" ng-model="course.code" placeholder="Course code" />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="control-label col-md-3">Title</label>
+        <div class="col-md-9">
+          <input type="text" class="form-control" ng-model="course.title" placeholder="Course title" />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="control-label col-md-3">Category</label>
+        <div class="col-md-9">
+          <div class="input-group">
+            <input type="text" class="form-control" ng-model="input.category" placeholder="Enter category">
+            <span class="input-group-btn">
+              <button ng-click="addCategory()" class="btn btn-default">
+                <small>
+                  <span class="glyphicon glyphicon-plus"></span>                  
+                </small>
+              </button>
+            </span>            
+          </div>
+          <p class="help-block">
+            <span ng-click="removeCategory($index)" ng-repeat="category in course.category" class="label label-primary button">{{category}} <span class="glyphicon glyphicon-remove"></span></span>      
+          </p>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="control-label col-md-3">Sub-category</label>
+        <div class="col-md-9">
+          <div class="input-group">
+            <input type="text" class="form-control" ng-model="input.subcategory" placeholder="Enter subcategory (Optional)">
+            <span class="input-group-btn">
+              <button class="btn btn-default" ng-click="addSubcategory()">
+                <small>
+                  <span class="glyphicon glyphicon-plus"></span>                  
+                </small>
+              </button>
+            </span>            
+          </div>
+
+          <div class="help-block">
+            <span ng-repeat="subcategory in course.subcategory" ng-click="removeSubcategory($index)" class="label label-primary button">{{subcategory}} <span class="glyphicon glyphicon-remove"></span></span>            
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="control-label col-md-3">Double Count</label>
+        <div class="col-md-9">
+          <div class="input-group">
+            <input type="text" class="form-control" ng-model="input.doubleCount" placeholder="Enter double count (Optional)">
+            <span class="input-group-btn">
+              <button class="btn btn-default" ng-click="addDoubleCount()">
+                <small>
+                  <span class="glyphicon glyphicon-plus"></span>                  
+                </small>
+              </button>
+            </span>            
+          </div>
+
+          <div class="help-block">
+            <span ng-repeat="doubleCount in course.doubleCount" ng-click="removeDoubleCount()" class="label label-primary button">{{doubleCount.replace}} <span class="glyphicon glyphicon-remove"></span></span>            
+          </div>
+        </div>
+      </div>
+   </form>   
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-default" ng-click="$dismiss()">Cancel</button>
+    <button class="btn btn-primary" ng-disabled="!isValid()" ng-click="$close(course)">Done</button>
+  </div>
+</div>
