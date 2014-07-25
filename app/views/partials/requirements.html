@@ -16,12 +16,12 @@
       <div class="panel-body">
         <strong>Preassigned:</strong>
         <div class="pull-right">
-          <button class="btn btn-default btn-xs" ng-click="increaseQty(requirement)">
-            <span class="glyphicon glyphicon-plus"></span>
+          <button class="btn btn-default btn-xs" ng-disabled="requirement.qtyRequired <= requirement.courses.length || requirement.qtyRequired < 2" ng-click="decreaseQty(requirement)">
+            <span class="glyphicon glyphicon-minus"></span>
           </button>
           <span class="badge">{{requirement.qtyRequired}}</span>          
-          <button class="btn btn-default btn-xs" ng-disabled="requirement.qtyRequired <= requirement.courses.length" ng-click="decreaseQty(requirement)">
-            <span class="glyphicon glyphicon-minus"></span>
+          <button class="btn btn-default btn-xs" ng-click="increaseQty(requirement)">
+            <span class="glyphicon glyphicon-plus"></span>
           </button>
         </div>
       </div>
@@ -49,12 +49,12 @@
         <div class="panel-body">
           <strong>Preassigned:</strong>
           <div class="pull-right">
-            <button class="btn btn-default btn-xs" ng-click="increaseQty(subtype)">
-              <span class="glyphicon glyphicon-plus"></span>
+            <button class="btn btn-default btn-xs" ng-disabled="subtype.qtyRequired <= subtype.courses.length || subtype.qtyRequired < 2" ng-click="decreaseQty(subtype)">
+              <span class="glyphicon glyphicon-minus"></span>
             </button>
             <span class="badge">{{subtype.qtyRequired}}</span>          
-            <button class="btn btn-default btn-xs" ng-disabled="subtype.qtyRequired <= subtype.courses.length" ng-click="decreaseQty(subtype)">
-              <span class="glyphicon glyphicon-minus"></span>
+            <button class="btn btn-default btn-xs" ng-click="increaseQty(subtype)">
+              <span class="glyphicon glyphicon-plus"></span>
             </button>
           </div>
         </div>
@@ -80,8 +80,11 @@
   <div class="col-md-4 scroll-y" full-height="90">    
     <div class="panel panel-default">
       <div class="panel-heading">Save</div>
-      <div class="panel-body">
+      <div class="panel-body">        
         <form name="requirementForm" novalidate>
+          <div class="form-group">
+            <label>Total Modules Required <span class="badge">{{getTotalModules()}}</span></label>
+          </div>
           <div class="form-group" ng-class="{'has-error': requirementForm.title.$error.required && flags.submitted}">
             <input type="text" name="title" ng-model="requirement.major" class="form-control" placeholder="Major Title" required/>
           </div>
@@ -92,7 +95,7 @@
             </select>
           </div>
           <div class="form-group">
-            <input type="submit" class="pull-right btn btn-success" value="Save Major" ng-disabled="requirementForm.$pristine && !hasChanged()" ng-click="addMajor()"/>
+            <input type="submit" class="pull-right btn btn-success" value="Save Major" ng-disabled="(requirementForm.$pristine && !hasChanged()) || !requirement.major" ng-click="addMajor()"/>
           </div>
         </form>
       </div>

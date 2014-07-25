@@ -14,6 +14,10 @@ angular.module('modulePlannerApp')
       requirements: []
     };
 
+    $scope.base = {
+      requirements: []
+    };
+
     $scope.requirement = angular.copy($scope.newRequirement);
 
     Requirement.getMajor({ major: 'Base' }, function(base){
@@ -127,7 +131,7 @@ angular.module('modulePlannerApp')
 
       var subtype = {
         type: data,
-        qtyRequired: 0,
+        qtyRequired: 1,
         courses: [],
         isAdded: true
       };
@@ -138,6 +142,17 @@ angular.module('modulePlannerApp')
       if (match < 0) {
         $scope.requirement.requirements.push(main);
       }
+
+      var emr = _.findIndex($scope.base.requirements, {type: 'Economics Major Related'});
+      $scope.base.requirements[emr].qtyRequired -= 1;
+
+      var match1 = _.findIndex($scope.requirement.requirements, { type: 'Economics Major Related'});
+
+      if (match1 > - 1) {
+        $scope.requirement.requirements[match1].qtyRequired -= 1;
+      } else {
+        $scope.requirement.requirements.push($scope.base.requirements[emr]);
+      }
     };
 
     $scope.addNewRequirement = function(data){
@@ -147,7 +162,7 @@ angular.module('modulePlannerApp')
 
       var requirement = {
         type: data,
-        qtyRequired: 0,
+        qtyRequired: 1,
         courses: [],
         isAdded: true
       };
@@ -157,6 +172,17 @@ angular.module('modulePlannerApp')
 
       $scope.base.requirements.unshift(requirement);
       $scope.requirement.requirements.push(requirement);
+
+      var emr = _.findIndex($scope.base.requirements, {type: 'Economics Major Related'});
+      $scope.base.requirements[emr].qtyRequired -= 1;
+
+      var match = _.findIndex($scope.requirement.requirements, { type: 'Economics Major Related'});
+
+      if (match > - 1) {
+        $scope.requirement.requirements[match].qtyRequired -= 1;
+      } else {
+        $scope.requirement.requirements.push($scope.base.requirements[emr]);
+      }
     };
 
     $scope.removeNewRequirement = function(requirement, index){
@@ -180,6 +206,12 @@ angular.module('modulePlannerApp')
 
       var emr = _.findIndex($scope.base.requirements, {type: 'Economics Major Related'});
       $scope.base.requirements[emr].qtyRequired += requirement.qtyRequired;
+
+      var newQty = $scope.base.requirements[emr].qtyRequired;
+      var originalQty = _.find($scope.originalBase.requirements, { type: 'Economics Major Related'}).qtyRequired;
+      if (newQty === originalQty) {
+        _.remove($scope.requirement.requirements, { type: 'Economics Major Related' });
+      }
     };
 
     $scope.removeSubtype = function(subtype, main, index){
@@ -207,6 +239,12 @@ angular.module('modulePlannerApp')
 
       var emr = _.findIndex($scope.base.requirements, {type: 'Economics Major Related'});
       $scope.base.requirements[emr].qtyRequired += subtype.qtyRequired;
+
+      var newQty = $scope.base.requirements[emr].qtyRequired;
+      var originalQty = _.find($scope.originalBase.requirements, { type: 'Economics Major Related'}).qtyRequired;
+      if (newQty === originalQty) {
+        _.remove($scope.requirement.requirements, { type: 'Economics Major Related' });
+      }
     };
 
     $scope.hasChanged = function(){
@@ -320,7 +358,7 @@ angular.module('modulePlannerApp')
 
         var emrPos = _.findIndex($scope.requirement.requirements, { type: 'Economics Major Related' });
         if (emrPos > -1) {
-          $scope.requirement.requirements[emrPos] = emr.qtyRequired;
+          $scope.requirement.requirements[emrPos].qtyRequired = emr.qtyRequired;
         } else {
           $scope.requirement.requirements.push(emr);
         }
@@ -348,5 +386,14 @@ angular.module('modulePlannerApp')
           _.remove($scope.requirement.requirements, { type: requirement.type });
         }
       }
+    };
+
+    $scope.getTotalModules = function(){
+      var total = 0;
+      angular.forEach($scope.base.requirements, function(r){
+        total += r.qtyRequired;
+      });
+
+      return total;
     };
   });
