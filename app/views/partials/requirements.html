@@ -8,13 +8,22 @@
     
     <!-- Panels -->
     <div ng-repeat="requirement in base.requirements" class="panel panel-primary" droppable="addSubtype(data, requirement)" hover-class="panel-info">
-      <div class="panel-heading">{{requirement.type}} 
+      <div class="panel-heading">{{requirement.type}}      
         <div class="pull-right">          
           <span ng-show="requirement.isAdded" ng-click="removeNewRequirement(requirement, $index)" class="pointer glyphicon glyphicon-remove"></span>
         </div>
       </div>
       <div class="panel-body">
         <strong>Preassigned:</strong>
+        <div class="pull-right">
+          <button class="btn btn-default btn-xs" ng-click="increaseQty(requirement)">
+            <span class="glyphicon glyphicon-plus"></span>
+          </button>
+          <span class="badge">{{requirement.qtyRequired}}</span>          
+          <button class="btn btn-default btn-xs" ng-disabled="requirement.qtyRequired <= requirement.courses.length" ng-click="decreaseQty(requirement)">
+            <span class="glyphicon glyphicon-minus"></span>
+          </button>
+        </div>
       </div>
       <table class="table table-hover preassigned-table" droppable="addToList(requirement.type, requirement, data)" hover-class="drop-hover">
         <tbody>
@@ -39,6 +48,15 @@
         </div>
         <div class="panel-body">
           <strong>Preassigned:</strong>
+          <div class="pull-right">
+            <button class="btn btn-default btn-xs" ng-click="increaseQty(subtype)">
+              <span class="glyphicon glyphicon-plus"></span>
+            </button>
+            <span class="badge">{{subtype.qtyRequired}}</span>          
+            <button class="btn btn-default btn-xs" ng-disabled="subtype.qtyRequired <= subtype.courses.length" ng-click="decreaseQty(subtype)">
+              <span class="glyphicon glyphicon-minus"></span>
+            </button>
+          </div>
         </div>
         <table class="table table-hover preassigned-table subtype-table" droppable="addToList(subtype.type, subtype, data)" hover-class="drop-hover">
           <tbody>

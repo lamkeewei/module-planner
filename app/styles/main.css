@@ -455,3 +455,8 @@ div[ng-view].ng-enter {
 #course-form .label{
   margin-right: 5px;
 }
+
+.badge.active {
+  background-color: white;
+  color: #428bca;
+}

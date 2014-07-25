@@ -19,6 +19,7 @@ angular.module('modulePlannerApp')
     Requirement.getMajor({ major: 'Base' }, function(base){
       // Store the original base for use later
       $scope.base = base;
+
       // Group the preassigned for easy access
       var preassigned = _.groupBy(base.preassigned, 'category');
 
@@ -176,6 +177,9 @@ angular.module('modulePlannerApp')
       _.remove($scope.requirement.requirements, function(r){
         return r.type === requirement.type;
       });
+
+      var emr = _.findIndex($scope.base.requirements, {type: 'Economics Major Related'});
+      $scope.base.requirements[emr].qtyRequired += requirement.qtyRequired;
     };
 
     $scope.removeSubtype = function(subtype, main, index){
@@ -200,6 +204,9 @@ angular.module('modulePlannerApp')
           }
         });
       }
+
+      var emr = _.findIndex($scope.base.requirements, {type: 'Economics Major Related'});
+      $scope.base.requirements[emr].qtyRequired += subtype.qtyRequired;
     };
 
     $scope.hasChanged = function(){
@@ -214,6 +221,10 @@ angular.module('modulePlannerApp')
         var type = r.type;
         var match = _.findIndex($scope.base.requirements, { type: type });
 
+        r.courses = _.map(r.courses, function(c){
+          c.isAdded = true;
+        });
+
         if (match > -1) {
           var original = $scope.base.requirements[match];
           if (!r.courses) {
@@ -223,6 +234,7 @@ angular.module('modulePlannerApp')
           r.courses = r.courses.concat(original.courses);
           $scope.base.requirements[match] = r;
         } else {
+          r.isAdded = true;
           $scope.base.requirements = $scope.base.requirements.concat(r);
         }
       });
@@ -256,5 +268,85 @@ angular.module('modulePlannerApp')
 
     $scope.addMajor = function(){
       console.log($scope.requirement);
+    };
+
+    $scope.decreaseQty = function(requirement) {
+      if (requirement.type !== 'Economics Major Related') {
+        // Offset from EMR
+        var emr = _.find($scope.base.requirements, { type: 'Economics Major Related' });
+        emr.qtyRequired++;
+
+        var emrPos = _.findIndex($scope.requirement.requirements, { type: 'Economics Major Related' });
+        if (emrPos > -1) {
+          $scope.requirement.requirements[emrPos].qtyRequired = emr.qtyRequired;
+        } else {
+          $scope.requirement.requirements.push(emr);
+        }
+
+        var emrBase1 = _.find($scope.originalBase.requirements, { type: 'Economics Major Related' });
+        if (emr.qtyRequired === emrBase1.qtyRequired) {
+          _.remove($scope.requirement.requirements, { type: 'Economics Major Related' });
+        }
+      }
+
+      requirement.qtyRequired -= 1;
+
+      var match = _.findIndex($scope.requirement.requirements, { type: requirement.type });
+      if (match > -1) {
+        $scope.requirement.requirements[match].qtyRequired = requirement.qtyRequired;
+      } else {
+        $scope.requirement.requirements.push(requirement);
+      }
+
+      // If it is the same as the base remove it
+      var baseMod = _.find($scope.originalBase.requirements, { type: requirement.type });
+      if (baseMod) {
+        var baseQty = baseMod.qtyRequired;
+        if (requirement.qtyRequired === baseQty) {
+          _.remove($scope.requirement.requirements, { type: requirement.type });
+        }
+      }
+    };
+
+    $scope.increaseQty = function(requirement) {
+      // Offset from EMR
+      if (requirement.type !== 'Economics Major Related') {
+        var emr = _.find($scope.base.requirements, { type: 'Economics Major Related' });
+        // Check if there are still available EMR to delete
+        if (emr.qtyRequired <= emr.courses.length || emr.qtyRequired < 1) {
+          return;
+        }
+        emr.qtyRequired--;
+
+        var emrPos = _.findIndex($scope.requirement.requirements, { type: 'Economics Major Related' });
+        if (emrPos > -1) {
+          $scope.requirement.requirements[emrPos] = emr.qtyRequired;
+        } else {
+          $scope.requirement.requirements.push(emr);
+        }
+
+        var emrBase2 = _.find($scope.originalBase.requirements, { type: 'Economics Major Related' });
+        if (emr.qtyRequired === emrBase2.qtyRequired) {
+          _.remove($scope.requirement.requirements, { type: 'Economics Major Related' });
+        }
+      }
+      
+      requirement.qtyRequired += 1;
+
+      var match = _.findIndex($scope.requirement.requirements, { type: requirement.type });
+      if (match > -1) {
+        $scope.requirement.requirements[match].qtyRequired = requirement.qtyRequired;
+      } else {
+        $scope.requirement.requirements.push(requirement);
+      }
+
+      // If it is the same as the base remove it
+      var baseMod = _.find($scope.originalBase.requirements, { type: requirement.type });
+      if (baseMod) {
+        var baseQty = baseMod.qtyRequired;
+        if (requirement.qtyRequired === baseQty) {
+          _.remove($scope.requirement.requirements, { type: requirement.type });
+        }
+      }
     };
   });
