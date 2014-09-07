@@ -1,19 +1,38 @@
 <div class="row">
   <div class="col-md-12 well">
-    <div class="form-group col-md-4">
-      <label class="control-label">Search:</label>
+    <div class="form-group col-md-2">
+      <label class="control-label">Code:</label>
       <div class="input-group">
-        <input type="text" class="form-control" placeholder="Course title" ng-model="search.$">
+        <input type="text" class="form-control" placeholder="Course title" ng-model="search.code">
         <span class="input-group-addon">
           <span class="glyphicon glyphicon-search"></span>
         </span>
       </div>
     </div>
 
-    <div class="col-md-6">
+    <div class="form-group col-md-4">
+      <label class="control-label">Title:</label>
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="Course title" ng-model="search.title">
+        <span class="input-group-addon">
+          <span class="glyphicon glyphicon-search"></span>
+        </span>
+      </div>
+    </div>
+
+    <div class="form-group col-md-3">
+      <label class="control-label">Categories:</label>
+      <select class="form-control" ng-model="search.category">
+        <option selected value="">No Filter</option>
+        <option ng-repeat="category in categories">{{category}}</option>
+      </select>
+    </div>
+
+    <div class="col-md-3">
       <label class="control-label">Options</label>
       <div>
-        <button class="btn btn-success" ng-click="addCourse()">Add Course</button>
+        <button class="btn btn-sm btn-info" ng-click="resetSearch()">Reset search</button>
+        <button class="btn btn-sm btn-success" ng-click="addCourse()">Add Course</button>
       </div>
     </div>
   </div>
@@ -33,9 +52,10 @@
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="course in courses | filter:search" ng-class="{'info': course.active}">
+        <tr ng-repeat="course in matchCategory(courses) | filter: search | limitTo: limit" ng-class="{'warning': course.hidden}">
           <td>
-            <input type="checkbox" ng-model="course.active"/>
+            <span class="glyphicon glyphicon-eye-open button" ng-click="toggleHidden(course)" ng-hide="course.hidden" tooltip="Hide/Unhide"></span>
+            <span class="glyphicon glyphicon-eye-close button" ng-click="toggleHidden(course)" ng-show="course.hidden" tooltip="Hide/Unhide"></span>
           </td>
           <td>{{course.code}}</td>
           <td>{{course.title}}</td>
@@ -51,8 +71,16 @@
             </ul>
           </td>
           <td class="text-center">
-            <span tooltip="Edit" ng-click="editCourse(course)" class="button glyphicon glyphicon-edit"></span>
-            <span tooltip="Delete" ng-click="deleteCourse(course, $index)" class="button glyphicon glyphicon-trash"></span>
+            <button class="btn btn-default btn-options" ng-click="editCourse(course)"><span tooltip="Edit" class="button glyphicon glyphicon-edit"></span></button>
+            <button class="btn btn-default btn-options" ng-click="deleteCourse(course, $index)"><span tooltip="Delete" class="button glyphicon glyphicon-trash"></span></button>
+          </td>
+        </tr>
+
+        <tr>
+          <td colspan="6" class="text-center" ng-show="matchCategory(courses).length - limit > 0 && !search.title && !search.code">
+            <small>
+              <a href="" ng-click="increaseLimit()">Load more ({{matchCategory(courses).length - limit}} more entries)</a>
+            </small>
           </td>
         </tr>
       </tbody>

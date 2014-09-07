@@ -1,49 +1,63 @@
 'use strict';
 
 angular.module('modulePlannerApp')
-  .controller('CourseFormCtrl', function ($scope, Course, $modal, course) {
-    $scope.input = {};
+  .controller('CourseFormCtrl', function ($scope, Course, course, categories, _) {
     $scope.course = course;
+    $scope.categories = categories;
+    $scope.input = {};
 
-    $scope.addCategory = function(){
-      if($scope.input.category) {
-        $scope.course.category.push($scope.input.category);
+    $scope.addCategory = function(item, model, label){
+      if (!_.contains($scope.course.category, item)) {
+        $scope.course.category.push(item);
       }
       $scope.input.category = '';
     };
 
-    $scope.removeCategory = function(index){
-      $scope.course.category.splice(index, 1);
-    };
-
-    $scope.addSubcategory = function(){
-      if ($scope.input.subcategory) {
-        $scope.course.subcategory.push($scope.input.subcategory);
+    $scope.addSubcategory = function(item, model, label){
+      if (!_.contains($scope.course.subcategory, item)) {
+        $scope.course.subcategory.push(item);
       }
       $scope.input.subcategory = '';
     };
 
-    $scope.removeSubcategory = function(index){
-      $scope.course.subcategory.splice(index, 1);
-    };
-
-    $scope.addDoubleCount = function(){
-      if ($scope.input.doubleCount) {
-        $scope.course.doubleCount = [{
-          replace: $scope.input.doubleCount,
+    $scope.addDoubleCount = function(item, model, label){
+      var index = _.findIndex($scope.course.doubleCount, { replace: item });
+      if (index === -1) {
+        $scope.course.doubleCount.push({
+          replace: item,
           freeUp: 'Economics Major Related'
-        }];
+        });
       }
       $scope.input.doubleCount = '';
     };
 
-    $scope.removeDoubleCount = function(){
-      $scope.course.doubleCount = [];
+    $scope.removeItem = function(index, field){
+      $scope.course[field].splice(index, 1);
     };
 
-    $scope.isValid = function(){
-      var notBlank = $scope.course.title && $scope.course.code;
+    $scope.newAdd = function(event, field){
+      var category = event.target.value;
+      if (event.keyCode === 13 && category) {
+        if (!_.contains($scope.course[field], category)) {
+          $scope.course[field].push(category);
+        }
+        event.target.value = '';
+      }
+    };
 
-      return notBlank && $scope.course.category.length > 0;
+    $scope.newAddDoubleCount = function(event){
+      var category = event.target.value;
+      var index = _.findIndex($scope.course.doubleCount, { replace: category });
+
+      if (event.keyCode === 13 && category) {
+        if (index === -1) {
+          $scope.course.doubleCount.push({
+            freeUp: 'Economics Major Related',
+            replace: category
+          });
+        }
+
+        event.target.value = '';
+      }
     };
   });

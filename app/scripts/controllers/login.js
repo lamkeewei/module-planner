@@ -15,6 +15,10 @@ angular.module('modulePlannerApp')
         })
         .then( function() {
           User.get(function(user){
+            if (user.role === 'admin') {
+              return $location.path('/course');
+            }
+
             if (user.requirement.length < 1) {
               $location.path('/welcome');
             } else {

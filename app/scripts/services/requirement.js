@@ -12,6 +12,9 @@ angular.module('modulePlannerApp')
         params: {
           attribute: 'major'
         }
+      },
+      update: {
+        method: 'PUT'
       }
     });
   });

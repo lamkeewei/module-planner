@@ -393,9 +393,16 @@ div[ng-view].ng-enter {
   table-layout: fixed;
 }
 
+#major-table tbody td:first-child label {
+  font-weight: normal;
+}
+
 #major-table tbody td:first-child {
-  text-align: center;
-  width: 12.5%;
+  cursor: pointer;
+}
+
+#major-table tbody td:first-child label span {
+  margin-right: 10px;
 }
 
 #major-table tbody td:last-child {
@@ -457,6 +464,19 @@ div[ng-view].ng-enter {
 }
 
 .badge.active {
-  background-color: white;
-  color: #428bca;
+  background-color: #428bca;
+  color: white;
+}
+
+.pull-right.btn {
+  margin-right: 5px;
+}
+
+.btn-options {
+  background-color: transparent;
+  border: none;
+}
+
+.btn-options:hover {
+  background-color: transparent; 
 }

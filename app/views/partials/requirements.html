@@ -81,9 +81,9 @@
     <div class="panel panel-default">
       <div class="panel-heading">Save</div>
       <div class="panel-body">        
-        <form name="requirementForm" novalidate>
+        <form name="requirementForm" ng-submit="addMajor()" novalidate>
           <div class="form-group">
-            <label>Total Modules Required <span class="badge">{{getTotalModules()}}</span></label>
+            <strong>Total Modules Required: <span class="badge active">{{getTotalModules()}}</span></strong>
           </div>
           <div class="form-group" ng-class="{'has-error': requirementForm.title.$error.required && flags.submitted}">
             <input type="text" name="title" ng-model="requirement.major" class="form-control" placeholder="Major Title" required/>
@@ -95,7 +95,8 @@
             </select>
           </div>
           <div class="form-group">
-            <input type="submit" class="pull-right btn btn-success" value="Save Major" ng-disabled="(requirementForm.$pristine && !hasChanged()) || !requirement.major" ng-click="addMajor()"/>
+            <input type="submit" class="pull-right btn btn-success" value="Save Major" ng-disabled="(requirementForm.$pristine && !hasChanged()) || !requirement.major"/>
+            <button type="button" class="btn btn-default pull-right" ng-click="resetForm()">Reset</button>
           </div>
         </form>
       </div>
@@ -117,11 +118,10 @@
         <table class="table table-hover" id="major-table">
           <tbody>
             <tr ng-class="{'info': major.active}" ng-repeat="(key, major) in requirements">
-              <td>
-                <input type="checkbox" ng-click="selectMajor(major)" ng-checked="major.active"/>
-              </td>
-              <td>
-                {{key}}
+              <td ng-click="selectMajor(major)">
+                <label>
+                  <span class="glyphicon glyphicon-pushpin"></span> {{key}}                 
+                </label>
               </td>
               <td>
                 <span ng-show="key !== 'Base'" class="glyphicon glyphicon-remove-circle pointer" tooltip="Delete Major"></span>

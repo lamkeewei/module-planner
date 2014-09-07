@@ -37,17 +37,25 @@ angular.module('modulePlannerApp', [
       .when('/users', {
         templateUrl: 'partials/users',
         controller: 'UserCtrl',
-        authenticate: true
+        authenticate: true,
+        admin: true
       })
       .when('/course', {
         templateUrl: 'partials/course',
         controller: 'CourseCtrl',
-        authenticate: true
+        resolve: {
+          courses: ['Course', function(Course){
+            return Course.query().$promise;
+          }]
+        }
+        // authenticate: true,
+        // admin: true
       })
       .when('/requirements', {
         templateUrl: 'partials/requirements',
         controller: 'RequirementsCtrl',
-        authenticate: true
+        authenticate: true,
+        admin: true
       })
       .otherwise({
         redirectTo: '/'
@@ -87,12 +95,18 @@ angular.module('modulePlannerApp', [
 
       if (next.authenticate) {
         User.get(function(user){
-          if (user.requirement.length < 1) {
-            return $location.path('/welcome');
-          }
+          if (!next.admin) {
+            if (user && user.requirement.length < 1) {
+              return $location.path('/welcome');
+            }
 
-          if(next.originalPath === '/welcome'){
-            return $location.path('/');
+            if(next.originalPath === '/welcome'){
+              return $location.path('/');
+            }
+          } else {
+            if (user.role !== 'admin') {
+              return $location.path('/');
+            }
           }
         });
       }

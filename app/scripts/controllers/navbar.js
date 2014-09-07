@@ -36,7 +36,9 @@ angular.module('modulePlannerApp')
           return !item.isAdmin;
         });
       } else {
-        $scope.menu = $scope.master;
+        $scope.menu = _.filter($scope.master, function(item){
+          return item.isAdmin;
+        });
       }
     };
 
